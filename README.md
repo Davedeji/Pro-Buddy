@@ -6,6 +6,8 @@
 
 ## General Info
 Shawn: knock knock.	
+This is Niki, for the sake of god please work.
+	
 ## Technologies
 Technologies used for this project:
 * HTML, CSS
