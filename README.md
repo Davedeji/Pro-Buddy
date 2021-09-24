@@ -7,6 +7,7 @@
 ## General Info
 This browser based web application to ...
 * This is Deji. I am Excited!
+* This is Niki, for the sake of god please work.
 	
 ## Technologies
 Technologies used for this project:
