@@ -5,8 +5,7 @@
 * [Contents](#content)
 
 ## General Info
-This browser based web application to ...
-	
+Shawn: knock knock.	
 ## Technologies
 Technologies used for this project:
 * HTML, CSS
