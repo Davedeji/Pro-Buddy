@@ -6,6 +6,7 @@
 
 ## General Info
 This browser based web application to ...
+* This is Deji. I am Excited!
 	
 ## Technologies
 Technologies used for this project:
