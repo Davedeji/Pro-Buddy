@@ -5,8 +5,14 @@
 * [Contents](#content)
 
 ## General Info
+<<<<<<< HEAD
 Shawn: knock knock.	
 This is Niki, for the sake of god please work.
+=======
+This browser based web application to ...
+* This is Deji. I am Excited!
+* This is Niki, for the sake of god please work.
+>>>>>>> ee5093346977f069cc0c797e6e6084495d84e7e0
 	
 ## Technologies
 Technologies used for this project:
