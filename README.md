@@ -8,7 +8,9 @@
 * Shawn: knock knock.	
 * This is Niki, for the sake of god please work.
 * This is Deji. I am Excited!
+* Niki's final addition to the project. 
 	
+
 ## Technologies
 Technologies used for this project:
 * HTML, CSS
