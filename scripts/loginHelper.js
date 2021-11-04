@@ -85,8 +85,6 @@ function authFailed(error) {
 }
 
 function clearError(input) {
-    console.log("called this")
-
     // Listen for `keydowm` event
     input.addEventListener('keydown', (e) => {
         document.getElementById("error-label").innerHTML = ""
