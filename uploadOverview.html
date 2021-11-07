@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Pro Buddy - Home</title>
+  <meta name="Welcome" content="Pro Buddy">
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <!-- Google Icons (Material Design)-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+
+  <script src="/scripts/firebaseAPI.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #image1 {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h6 {
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!------------------------------------>
+  <!-- Your own HTML layout goes here -->
+  <!------------------------------------>
+  <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="images/Logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
+        Probuddy
+      </a>
+
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link" href="#">Interest</a>
+          <a class="nav-link" href="#">Skills</a>
+          <a class="nav-link" href="#">Progress</a>
+          <a class="nav-link" href="#">Checkin</a>
+          <a class="nav-link" href="#">Chat</a>
+          <a class="nav-link" href="#">FAQ/Help</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <br>
+
+    <div class="container">
+      <div class="card-group">
+
+        <div class="card" style="width: 18rem;">
+
+          <div class="card-body">
+            <h5 class="card-title" id="displayname">Hike name</h5>
+            <p class="card-text" id="time">This card has supporting text below as a natural lead-in to additional
+              content.</p>
+
+            <p class="card-text" id="description">This card has supporting text below as a natural lead-in to additional
+              content.</p>
+            <a href="#" class="btn btn-primary">Read more</a>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+
+    <a class="btn btn-primary" href="upload.html" role="button">Upload New Entry</a>
+
+
+
+    <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
+      <i class="material-icons">home</i>
+      <i class="material-icons">check</i>
+      <i class="material-icons">language</i>
+      <i class="material-icons">upload_file</i>
+      <i class="material-icons">chat</i>
+
+    </footer>
+
+    <div class="text-center py-5">
+    </div>
+
+
+
+  </div>
+
+  <!--------------------------------------------------->
+  <!-- Your Javascript Libraries and scripts go here -->
+  <!--------------------------------------------------->
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+  <script>
+    function read_display_Upload() {
+      db.collection("Users").doc("user01").collection("Uploads").doc("Progress1")                                                      //name of the collection and documents should matach excatly with what you have in Firestore
+        .onSnapshot(UploadDoc => {                                                               //arrow notation
+          // console.log("current document data: " + TuesdayDoc.data());                          //.data() returns data object
+          document.getElementById("displayname").innerHTML = UploadDoc.data().displayName;      //using javascript to display the data on the right place
+          document.getElementById("description").innerHTML = UploadDoc.data().description;
+          document.getElementById("time").innerHTML = UploadDoc.data().Date.toDate().toDateString();
+
+          //$('#quote-goes-here').text(c.data().quote);                                       //using jquery object dot notation
+          //$("#quote-goes-here").text(c.data()["quote"]);                                     //using json object indexing
+        })
+    }
+    read_display_Upload()
+  </script>
+
+
+
+</body>
+
+</html>
