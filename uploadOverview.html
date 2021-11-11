@@ -103,7 +103,7 @@
       </div>
     </div>
 
-    <a class="btn btn-primary" role="button" onclick="read_display_Upload()">Upload New Entry</a>
+    <!-- <a class="btn btn-primary" role="button" onclick="read_display_Upload()">Upload New Entry</a> -->
 
 
 
@@ -135,31 +135,39 @@
   <script>
 
     function read_display_Upload() {
-      const user = firebase.auth().currentUser;
-      var userUID = ""
-      if (user) {
-        userUID = user.uid
-      }
-      console.log(userUID)
-      db.collection("Users").doc(userUID).collection("Uploads").doc("oQvEsTCz1cD8sU7AXoQh")                                                 //name of the collection and documents should matach excatly with what you have in Firestore
-        .onSnapshot(UploadDoc => {
+      // const user = firebase.auth().currentUser;
+      // var userUID = ""
+      // if (user) {
+      //   userUID = user.uid
+      // }
+      // console.log(userUID)
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          console.log(user.uid)
+          db.collection("Users").doc(user.uid).collection("Uploads").doc("oQvEsTCz1cD8sU7AXoQh")                                                 //name of the collection and documents should matach excatly with what you have in Firestore
+            .get().then(UploadDoc => {
 
-          console.log(UploadDoc.data())                                                      //arrow notation
-          // console.log("current document data: " + TuesdayDoc.data());                          //.data() returns data object
-          document.getElementById("displayname").innerHTML = UploadDoc.data().title;      //using javascript to display the data on the right place
-          document.getElementById("description").innerHTML = UploadDoc.data().description;
-          document.getElementById("time").innerHTML = UploadDoc.data().date.toDate().toDateString();
+              console.log(UploadDoc.data())                                                      //arrow notation
+              // console.log("current document data: " + TuesdayDoc.data());                          //.data() returns data object
+              document.getElementById("displayname").innerHTML = UploadDoc.data().title;      //using javascript to display the data on the right place
+              document.getElementById("description").innerHTML = UploadDoc.data().description;
+              document.getElementById("time").innerHTML = UploadDoc.data().date.toDate().toDateString();
 
-          //$('#quote-goes-here').text(c.data().quote);                                       //using jquery object dot notation
-          //$("#quote-goes-here").text(c.data()["quote"]);                                     //using json object indexing
-        })
+              //$('#quote-goes-here').text(c.data().quote);                                       //using jquery object dot notation
+              //$("#quote-goes-here").text(c.data()["quote"]);                                     //using json object indexing
+            })
+
+        }
+      })
+
     }
+    read_display_Upload();
 
-    if (document.readyState === 'complete') {
-      read_display_Upload()
+    // if (document.readyState === 'complete') {
+    //   read_display_Upload()
 
       // The page is fully loaded
-    }
+    // }
 
 
 
