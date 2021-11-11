@@ -93,7 +93,7 @@
           aria-describedby="basic-addon1" name="description">
         <input type="text" class="form-control" placeholder="title" aria-label="Username"
           aria-describedby="basic-addon1" name="title">
-          
+
       </div>
       <button>Complete</button>
 
@@ -126,22 +126,27 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
   <script>
-    const form = document.getElementById("uploadTitle")
+    const form = document.getElementById("uploadTitle");
 
     function upload() {
+      const user = firebase.auth().currentUser;
+      var userUID = ""
+      if (user) {
+        userUID = user.uid
+      }
       //define a variable for the collection you want to create in Firestore to populate data
-      let uploadRef = db.collection("Users").doc(user.uid).collection("Uploads");
-      // let content = document.getElementById("uploadTitle")
-
-      uploadRef.set({
-        uploadtitle: form.description.value,
+      console.log(userUID)
+      db.collection("Users").doc(userUID).collection("Uploads").add({
+        description: form.description.value,
         title: form.title.value,
-        datecreated: firebase.firestore.FieldValue.serverTimestamp()
+        date: firebase.firestore.FieldValue.serverTimestamp()
       });
 
 
 
     }
+
+
     // form.addEventListener('submit',(e) => {
     //   e.preventDefault();
     //   db.collection("Users").doc("user01").collection("Uploads").add({
