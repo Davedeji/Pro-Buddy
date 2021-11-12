@@ -74,23 +74,25 @@
         </div>
         </div>
     </nav>
-  <div class="container">
-    <br>
+    <div class="container">
+      <br>
+      <br>
 
-  <div>
-    <iframe src="https://calendar.google.com/calendar/embed?height=400&wkst=1&bgcolor=%233F51B5&ctz=America%2FLos_Angeles&showTitle=0&src=YzBjM3BrcTR1NWY2bDYxajQxNW9vbnJxZ29AZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ&color=%23795548" style="border:solid 1px #777" width="500" height="400" frameborder="0" scrolling="no"></iframe>
-  </div>
+      <div class="card-group">
+
+        <div class="card" style="width: 18rem;">
+
+          <div class="card-body">
+            <h5 class="card-title" id="displayname">Thanks for checking in</h5>
+            <p class="card-text" id="time"></p>
+
+            <p class="card-text" id="notes"></p>
+            <a href="#" class="btn btn-primary" onclick="location.href='checkin_main.html'">Go back</a>
+          </div>
+        </div>
 
 
-  <form id="uploadTitle">
-  <div class="form-floating">
-    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-    <label for="floatingTextarea2">Comments</label>
-  </div>
-</form>
-
-
-  <button onclick="upload()" class="btn btn-primary" type="button"> <a href="checkin_complete.html">Complete Daily Check-In</a></button>
+</div>
     <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
       <i class="material-icons">home</i>
       <i class="material-icons">check</i>
@@ -110,5 +112,36 @@
   <!--------------------------------------------------->
   <!-- Your Javascript Libraries and scripts go here -->
   <!--------------------------------------------------->
+  
 </body>
+<script>
+  function read_display_Upload() {
+      // const user = firebase.auth().currentUser;
+      // var userUID = ""
+      // if (user) {
+      //   userUID = user.uid
+      // }
+      // console.log(userUID)
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          console.log(user.uid)
+          db.collection("checkin").doc(user.uid)                                                //name of the collection and documents should matach excatly with what you have in Firestore
+            .get().then(UploadDoc => {
+
+              console.log(UploadDoc.data())                                                      //arrow notation
+              // console.log("current document data: " + TuesdayDoc.data());                          //.data() returns data object
+              document.getElementById("notes").innerHTML = UploadDoc.data().title;      //using javascript to display the data on the right place
+              
+              document.getElementById("time").innerHTML = UploadDoc.data().date.toDate().toDateString();
+
+              //$('#quote-goes-here').text(c.data().quote);                                       //using jquery object dot notation
+              //$("#quote-goes-here").text(c.data()["quote"]);                                     //using json object indexing
+            })
+
+        }
+      })
+
+    }
+    read_display_Upload();
+</script>
 </html>
