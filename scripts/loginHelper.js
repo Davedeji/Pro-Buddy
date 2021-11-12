@@ -89,4 +89,32 @@ function clearError(input) {
     input.addEventListener('keydown', (e) => {
         document.getElementById("error-label").innerHTML = ""
     });
+
+$(document).ready(function () {
+    console.log("pageload")
+    addKeyupListener()
+    })
+
+function addKeyupListener() {
+    //setup before functions 
+    let typingTimer; //timer identifier
+    let doneTypingInterval = 5000; //time in ms (5 seconds)
+    let myInput = document.getElementById('inputEmail');
+
+    //on keyup, start the countdown
+    myInput.addEventListener('keyup', () => {
+        clearTimeout(typingTimer);
+        if (myInput.value) {
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        }
+    });
+
+    //user is "finished typing," do something
+    function doneTyping() {
+        console.log("typing done")
+
+        //do something
+    }
+}
+
 }
