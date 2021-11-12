@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Pro Buddy - Match</title>
+    <title>Pro Buddy - Login</title>
     <meta name="Welcome" content="Pro Buddy">
 
     <!-- Required meta tags -->
@@ -33,48 +33,38 @@
     <script src="/scripts/firebaseAPI.js"></script>
 
     <!-- Custom CSS & JS -->
-    <script src="/scripts/displayMatch.js"></script>
-    <link rel="stylesheet" href="styles/displayMatch.css">
+    <script src="/scripts/loginHelper.js"></script>
+    <link rel="stylesheet" href="styles/login.css">
 
 </head>
 
 <body>
     <div class="row justify-content-center align-items-center h-100">
-
-        <div class="col text-center mt-5">
-            <h2>New Match!!</h2>
-            <img src="/images/profile.jpg" class="rounded-circle center" alt="Cinque Terre">
-            <h2 class="mt-2">Cice Talsde</h2>
-
-        </div>
-
-        <div class="card-row mt-3 mx-auto justify-content-center align-items-center row mx-4 row-cols-2 "
-            id="cardGroup">
-            <div class="col mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Im Interested In:</h5>
-                        <h6 class="card-subtitle mb-2 text-muted"></h6>
-                        <p class="card-text" id="card-text-interests">film <br> tv</p>
-                    </div>
-                </div>
+        <div class="w-50 form-width col-sm-4 offset-sm-0 text-center">
+            <div class="mt-5 mb-3 text-center">
+                <img id="logo" src="/images/Logo.png" class="rounded" alt="...">
             </div>
-            <div class="col mb-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Im Good at:</h5>
-                        <h6 class="card-subtitle mb-2 text-muted"></h6>
-                        <p class="card-text" id="card-text-skills">film <br> tv</p>
-                    </div>
+            <h3 class="mb-3">Pro Buddy</h3>
+            <form class="form-inline justify-content-center">
+                <div class="form-group mb-2">
+                    <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp"
+                        placeholder="Email">
+                    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                        else.</small> -->
                 </div>
-            </div>
+                <div class="form-group mb-1">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                </div>
+                <label for="" class="mb-4" id="error-label"></label>
 
+                <button type="button" class="btn btn-primary mb-2" onclick="signUpUser()">Login</button>
+                <a class="btn btn-outline-primary" role="button" style="text-transform:none">
+                    <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                    Login with Google
+                </a>
+            </form>
         </div>
-        <div class="col text-center w-50 col-1 offset-sm-0 text-center">
-            <button type="button" class="btn btn-primary mb-2" onclick="">Accept</button>
-            <button type="button" class="btn btn-outline-primary" onclick="">Decline</button>
-        </div>
-
     </div>
 </body>
 

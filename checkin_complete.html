@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Pro Buddy - Home</title>
+  <title>Pro Buddy - CheckIn</title>
   <meta name="Welcome" content="Pro Buddy">
 
   <!-- Required meta tags -->
@@ -56,9 +56,10 @@
         <img src="images/Logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
         Probuddy
       </a>
-   
-   
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -71,35 +72,35 @@
           <a class="nav-link" href="#">Chat</a>
           <a class="nav-link" href="#">FAQ/Help</a>
         </div>
+      </div>
+    </div>
+  </nav>
+  <div class="container">
+    <br>
+    <br>
+
+    <div class="card-group">
+
+      <div class="card" style="width: 18rem;">
+
+        <div class="card-body">
+          <h5 class="card-title" id="displayname">Thanks for checking in</h5>
+          <p class="card-text" id="time"></p>
+
+          <p class="card-text" id="notes"></p>
+          <a href="#" class="btn btn-primary" onclick="location.href='checkin_main.html'">Go back</a>
         </div>
-        </div>
-    </nav>
-    <div class="container">
-      <br>
-      <br>
-
-      <div class="card-group">
-
-        <div class="card" style="width: 18rem;">
-
-          <div class="card-body">
-            <h5 class="card-title" id="displayname">Thanks for checking in</h5>
-            <p class="card-text" id="time"></p>
-
-            <p class="card-text" id="notes"></p>
-            <a href="#" class="btn btn-primary" onclick="location.href='checkin_main.html'">Go back</a>
-          </div>
-        </div>
+      </div>
 
 
-</div>
+    </div>
     <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
       <i class="material-icons">home</i>
       <i class="material-icons">check</i>
       <i class="material-icons">language</i>
       <i class="material-icons">upload_file</i>
       <i class="material-icons">chat</i>
-      
+
     </footer>
 
     <div class="text-center py-5">
@@ -112,36 +113,39 @@
   <!--------------------------------------------------->
   <!-- Your Javascript Libraries and scripts go here -->
   <!--------------------------------------------------->
-  
+
 </body>
 <script>
   function read_display_Upload() {
-      // const user = firebase.auth().currentUser;
-      // var userUID = ""
-      // if (user) {
-      //   userUID = user.uid
-      // }
-      // console.log(userUID)
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          console.log(user.uid)
-          db.collection("checkin").doc(user.uid)                                                //name of the collection and documents should matach excatly with what you have in Firestore
-            .get().then(UploadDoc => {
+    // const user = firebase.auth().currentUser;
+    // var userUID = ""
+    // if (user) {
+    //   userUID = user.uid
+    // }
+    // console.log(userUID)
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        console.log(user.uid)
+        db.collection("checkin").doc(user
+          .uid) //name of the collection and documents should matach excatly with what you have in Firestore
+          .get().then(UploadDoc => {
 
-              console.log(UploadDoc.data())                                                      //arrow notation
-              // console.log("current document data: " + TuesdayDoc.data());                          //.data() returns data object
-              document.getElementById("notes").innerHTML = UploadDoc.data().title;      //using javascript to display the data on the right place
-              
-              document.getElementById("time").innerHTML = UploadDoc.data().date.toDate().toDateString();
+            console.log(UploadDoc.data()) //arrow notation
+            // console.log("current document data: " + TuesdayDoc.data());                          //.data() returns data object
+            document.getElementById("notes").innerHTML = UploadDoc.data()
+            .title; //using javascript to display the data on the right place
 
-              //$('#quote-goes-here').text(c.data().quote);                                       //using jquery object dot notation
-              //$("#quote-goes-here").text(c.data()["quote"]);                                     //using json object indexing
-            })
+            document.getElementById("time").innerHTML = UploadDoc.data().date.toDate().toDateString();
 
-        }
-      })
+            //$('#quote-goes-here').text(c.data().quote);                                       //using jquery object dot notation
+            //$("#quote-goes-here").text(c.data()["quote"]);                                     //using json object indexing
+          })
 
-    }
-    read_display_Upload();
+      }
+    })
+
+  }
+  read_display_Upload();
 </script>
+
 </html>
