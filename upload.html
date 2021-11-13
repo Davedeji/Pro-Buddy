@@ -136,10 +136,11 @@
       }
       //define a variable for the collection you want to create in Firestore to populate data
       console.log(userUID)
-      db.collection("Users").doc(userUID).collection("Uploads").add({
+      db.collection("Uploads").add({
         description: form.description.value,
         title: form.title.value,
-        date: firebase.firestore.FieldValue.serverTimestamp()
+        date: firebase.firestore.FieldValue.serverTimestamp(),
+        ID: user.uid
       });
 
 
