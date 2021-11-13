@@ -83,9 +83,9 @@
     <br>
 
     <div class="container">
-      <div class="card-group">
+      <div class="card-group" id="cardGroup">
 
-        <div class="card" style="width: 18rem;">
+        <!-- <div class="card" style="width: 18rem;">
 
           <div class="card-body">
             <h5 class="card-title" id="displayname">Hike name</h5>
@@ -96,7 +96,7 @@
               content.</p>
             <a href="#" class="btn btn-primary">Read more</a>
           </div>
-        </div>
+        </div> -->
 
 
 
@@ -135,40 +135,56 @@
   <script>
 
     function read_display_Upload() {
-      // const user = firebase.auth().currentUser;
-      // var userUID = ""
-      // if (user) {
-      //   userUID = user.uid
-      // }
-      // console.log(userUID)
+    
+      var Alluploads
+      var card
       firebase.auth().onAuthStateChanged(user => {
         if (user) {
           console.log(user.uid)
-          db.collection("Users").doc(user.uid).collection("Uploads").doc("oQvEsTCz1cD8sU7AXoQh")                                                 //name of the collection and documents should matach excatly with what you have in Firestore
-            .get().then(UploadDoc => {
 
-              console.log(UploadDoc.data())                                                      //arrow notation
-              // console.log("current document data: " + TuesdayDoc.data());                          //.data() returns data object
-              document.getElementById("displayname").innerHTML = UploadDoc.data().title;      //using javascript to display the data on the right place
-              document.getElementById("description").innerHTML = UploadDoc.data().description;
-              document.getElementById("time").innerHTML = UploadDoc.data().date.toDate().toDateString();
+          db.collection("Uploads").where("ID", "==", user.uid)                                              
+            .get().then((UploadDocs) => {
+              Alluploads = UploadDocs.docs
 
-              //$('#quote-goes-here').text(c.data().quote);                                       //using jquery object dot notation
-              //$("#quote-goes-here").text(c.data()["quote"]);                                     //using json object indexing
+              Alluploads.forEach((upload) => {
+                console.log(upload.data())
+
+                var tree = document.createDocumentFragment();
+                var card = document.createElement("div");
+                var cardBody = document.createElement("div");
+                var title = document.createElement("h5");
+                var time = document.createElement("p");
+                var description = document.createElement("p");
+
+                card.setAttribute("class", "card");
+                card.setAttribute("style", "width: 18rem;");
+                cardBody.setAttribute("class", "card-body");
+                title.setAttribute("class", "card-title");
+                title.appendChild(document.createTextNode(upload.data().title));
+                time.setAttribute("class", "card-text");
+                time.appendChild(document.createTextNode(upload.data().date.toDate().toDateString()));
+                description.setAttribute("class", "card-text");
+                description.appendChild(document.createTextNode(upload.data().description));
+                cardBody.appendChild(title);
+                cardBody.appendChild(time);
+                cardBody.appendChild(description);
+                card.appendChild(cardBody);
+                tree.appendChild(card);
+                document.getElementById("cardGroup").appendChild(tree);
+
+              })
             })
 
         }
       })
-
     }
+
+
+
+
     read_display_Upload();
 
-    // if (document.readyState === 'complete') {
-    //   read_display_Upload()
-
-      // The page is fully loaded
-    // }
-
+    
 
 
 
