@@ -52,6 +52,10 @@
     <!-- Import header component in head and use this tag. Done!! -->
     <header-component></header-component>
     <main>
+        <div class="card-deck row-cols-2"
+            id="cardGroup">
+
+        </div>
         <form>
             <div class="form-row fixed-bottom align-items-center">
                 <div class="col-auto">
@@ -66,6 +70,39 @@
 </body>
 
 <script>
+    function getMessages() {
+        var docRef = db.collection("messages").doc("message01").collection("messages")
+        docRef.onSnapshot((querySnapshot) => {
+            querySnapshot.docChanges().forEach((change) => {
+                // doc.data() is never undefined for query doc snapshots
+                const timeStampDate = change.doc.data().sentAt;
+                console.log(timeStampDate)
+                const dateInMillis = timeStampDate._seconds * 1000
+                var date = new Date(dateInMillis).toDateString() + ' at ' + new Date(dateInMillis).toLocaleTimeString()
+                var card = $(createCard("", change.doc.data().messageText), date)
+                var element = document.getElementById("cardGroup");
+                $('#cardGroup').append(card);
+            });
+        });
+    }
+    getMessages();
+    // let cardCount = 0
+    // let cardData = [
+    //     ["Music", "music", "/images/skills_interests/music.jpg"],
+    //     ["Nature", "nature", "/images/skills_interests/nature.jpg"],
+    //     ["Arts & Crafts", "arts_crafts", "/images/skills_interests/arts_crafts.jpg"],
+    //     ["Cooking", "cooking", "/images/skills_interests/cooking.jpg"],
+    //     ["Dance", "dance", "/images/skills_interests/dance.jpg"],
+    //     ["Film & TV", "film_tv", "/images/skills_interests/film_tv.jpg"],
+    // ];
+    // while (cardCount < cardData.length) {
+    //     var card = $(createCard(cardData[cardCount][0], cardData[cardCount][1],
+    //         cardData[cardCount][2]))
+    //     var element = document.getElementById("cardGroup");
+    //     $('#cardGroup').append(card);
+    //     cardCount += 1
+    // }
+
     function writeMessage() {
         const user = firebase.auth().currentUser;
         if (user) {
@@ -79,6 +116,7 @@
                 })
                 .then(() => {
                     console.log("Document successfully written!");
+                    document.getElementById("messageInput").value = ""
                 })
                 .catch((error) => {
                     console.error("Error writing document: ", error);
@@ -87,6 +125,16 @@
             // User not logged in or has just logged out.
         }
 
+    }
+
+    function createCard(title, message, sentAt) {
+        return `<div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">${title}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">${sentAt}</h6>
+            <p class="card-text">${message}</p>
+        </div>
+    </div>`;
     }
 </script>
 
