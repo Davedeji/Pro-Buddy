@@ -116,23 +116,28 @@
       const user = firebase.auth().currentUser;
       var userUID = ""
       var input = form.file.files[0]
-      var uploadTask = storageRef.child('files/' + input.name).put(input);
+      var uploadTask = storageRef.child('files/' + input.name).put(input).then((e) => {
+        storageRef.child('files/' + input.name).getDownloadURL().then((url) => {
+          console.log(url)
 
-      if (user) {
-        userUID = user.uid
-      }
-      uploadTask
-      storageRef.child('files/' + input.name).getDownloadURL().then((url) => {
-        console.log(url)
-        console.log(userUID)
-        db.collection("Uploads").add({
-          description: form.description.value,
-          title: form.title.value,
-          date: firebase.firestore.FieldValue.serverTimestamp(),
-          ID: user.uid,
-          download: url
+          db.collection("Uploads").add({
+            description: form.description.value,
+            title: form.title.value,
+            date: firebase.firestore.FieldValue.serverTimestamp(),
+            ID: user.uid,
+            download: url
 
-        });
+          });
+
+
+        })
+
+        if (user) {
+          userUID = user.uid
+          console.log(userUID)
+        }
+        uploadTask
+
 
       })
       //define a variable for the collection you want to create in Firestore to populate data
