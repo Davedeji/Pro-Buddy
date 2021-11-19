@@ -87,51 +87,47 @@
   <button onclick= "CHECKIN()" class="btn btn-primary" type="button"> Complete Daily Check-In</button>
 
 
-  <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
-      <i class="material-icons">home</i>
-      <i class="material-icons">check</i>
-      <i class="material-icons">language</i>
-      <i class="material-icons">upload_file</i>
-      <i class="material-icons">chat</i>
 
-    </footer>
+      <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
+        <i class="material-icons">home</i>
+        <i class="material-icons">check</i>
+        <i class="material-icons">language</i>
+        <i class="material-icons">upload_file</i>
+        <i class="material-icons">chat</i>
+      </footer>
 
-    <div class="text-center py-5">
+      <div class="text-center py-5"></div>
     </div>
 
+    <!--------------------------------------------------->
+    <!-- Your Javascript Libraries and scripts go here -->
+    <!--------------------------------------------------->
 
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script>
+      function CHECKIN() {
+        let Notes = document.getElementById("comment").value;
 
-  </div>
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            var currentUser = db.collection("users").doc(user.uid);
+            var userID = user.uid;
+            //get the document for current user.
+            currentUser.get().then((userDoc) => {
+              // Start a new collection and add all data in it.
+              db.collection("checkin").add({
+                Notes: Notes,
+                User: userID,
+                Time: firebase.firestore.Timestamp.now(),
+              }).then(() => {window.location = "/checkin_complete.html"}); 
+            });
+          }
+        }); 
+   
+      }
 
-  <!--------------------------------------------------->
-  <!-- Your Javascript Libraries and scripts go here -->
-  <!--------------------------------------------------->
-
-  <!-- Option 1: Bootstrap Bundle with Popper -->
-  <script>
-    function CHECKIN(){
-      let Notes = document.getElementById("comment").value;
-      onclick=location.href='checkin_complete.html'
-      
-      firebase.auth().onAuthStateChanged(user => {
-                if (user) {
-                    var currentUser = db.collection("users").doc(user.uid)
-                    var userID = user.uid;
-                    //get the document for current user.
-                    currentUser.get()
-                    .then(userDoc => {
-														// Start a new collection and add all data in it.
-                            db.collection("checkin").add({
-                              Notes: Notes,
-                              User: userID,
-                              Time: firebase.firestore.Timestamp.now()
-                              
-                            })})}})}
-
-
-
-  </script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    </script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
 
@@ -155,7 +151,5 @@
   }
 
   </script> -->
-
-</body>
-
+  </body>
 </html>
