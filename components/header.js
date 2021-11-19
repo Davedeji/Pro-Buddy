@@ -23,7 +23,7 @@ headerTemplate.innerHTML = `
           <a class="nav-link active" aria-current="page" href="#">Home</a>
           <a class="nav-link" href="#">Interest</a>
           <a class="nav-link" href="#">Skills</a>
-          <a class="nav-link" href="#">Progress</a>
+          <a class="nav-link" href="./upload.html">Progress</a>
           <a class="nav-link" href="#">Checkin</a>
           <a class="nav-link" href="#">Chat</a>
           <a class="nav-link" href="#">FAQ/Help</a>
