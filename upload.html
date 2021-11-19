@@ -116,8 +116,8 @@
       const user = firebase.auth().currentUser;
       var userUID = ""
       var input = form.file.files[0]
-      var uploadTask = storageRef.child('files/' + input.name).put(input).then((e) => {
-        storageRef.child('files/' + input.name).getDownloadURL().then((url) => {
+      var uploadTask = storageRef.child('files/' + user.uid + '/' + input.name).put(input).then((e) => {
+        storageRef.child('files/' + user.uid + '/' + input.name).getDownloadURL().then((url) => {
           console.log(url)
 
           db.collection("Uploads").add({
