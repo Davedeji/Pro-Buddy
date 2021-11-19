@@ -110,11 +110,19 @@
                 <label >City</label>
                 <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
             </div>
+
+            <div class="form-group">
+              <label> Tell us about yourself!</label>
+              <input type="text" id="introInput" class="form-control" placeholder="Your intro goes here" style="height: 100px">
+            </div>
+
+
+
         </fieldset>
         <div class="d-flex justify-content-end mt-5">
             <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
             <span style="width: 10px"></span>
-            <button type="button" class="btn btn-info" onclick="saveUserInfo()">Save</button>
+            <button type="button" class="btn btn-primary" onclick="saveUserInfo()">Save</button>
         </div>
     </form>
 </div>
@@ -192,7 +200,7 @@
      // console.log("save is clicked")
      //grab values from the form that user populated, then put 
      userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
-     userAge= document.getElementById('ageInput').value;     //get the value of the field with id="ageInput"
+     userAge= document.getElementById('ageInput').value;     //get the value of the field with id="schoolInput"
      userCity = document.getElementById('cityInput').value;       //get the value of the field with id="cityInput"
      // console.log("input is " userName, userAge, userCity)
  
