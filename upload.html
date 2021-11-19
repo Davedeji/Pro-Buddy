@@ -24,12 +24,14 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
 
   <script src="/scripts/firebaseAPI.js"></script>
 
   <!-- Header Component-->
   <script src="/components/header.js" type="text/javascript" defer></script>
-  
+
   <style>
     * {
       margin: 0;
@@ -73,9 +75,10 @@
           aria-describedby="basic-addon1" name="description">
         <input type="text" class="form-control" placeholder="title" aria-label="Username"
           aria-describedby="basic-addon1" name="title">
+        <input type="file" name="file">
 
       </div>
-      <button>Complete</button>
+      
 
 
     </form>
@@ -111,17 +114,30 @@
     function upload() {
       const user = firebase.auth().currentUser;
       var userUID = ""
+      var input = form.file.files[0]
+      var uploadTask = storageRef.child('files/' + input.name).put(input);
+
       if (user) {
         userUID = user.uid
       }
+      uploadTask
+      storageRef.child('files/' + input.name).getDownloadURL().then((url) => {
+        console.log(url)
+        console.log(userUID)
+        db.collection("Uploads").add({
+          description: form.description.value,
+          title: form.title.value,
+          date: firebase.firestore.FieldValue.serverTimestamp(),
+          ID: user.uid,
+          download: url
+
+        });
+
+      })
       //define a variable for the collection you want to create in Firestore to populate data
-      console.log(userUID)
-      db.collection("Uploads").add({
-        description: form.description.value,
-        title: form.title.value,
-        date: firebase.firestore.FieldValue.serverTimestamp(),
-        ID: user.uid
-      });
+
+
+
 
 
 
