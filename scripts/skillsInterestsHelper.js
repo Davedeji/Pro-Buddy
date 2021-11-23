@@ -65,4 +65,24 @@ function continueClicked(data, firestoreDocID) {
         .catch((error) => {
             console.error("Error writing document: ", error);
         });
+
+    for (key in data){
+        console.log(key.replace("card-", ""))
+        const keyString = key.replace("card-", "")
+        var docRef = db.collection(firestoreDocID).doc(keyString)
+        if (data[key]){ //ccheck if data value is true
+            docRef.set({
+                userID: firebase.firestore.FieldValue.arrayUnion(user.uid)
+            },{merge: true});
+        }
+        else {
+            docRef.set({
+                userID: firebase.firestore.FieldValue.arrayRemove(user.uid)
+            }, {merge: true});
+
+        }
+
+    }
+    
+    db.collection(firestoreDocID).doc()
 }

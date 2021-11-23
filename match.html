@@ -94,11 +94,11 @@
       var two = [];
       var matched = [];
       db.collection("interests").doc("music").get().then(function (snapshot) {
-        one = snapshot.data().userid;
+        one = snapshot.data().userID;
         console.log(one);
-        db.collection("skill").doc("arts").get().then(function (snapshot) {
+        db.collection("skills").doc("arts").get().then(function (snapshot) {
 
-          two = snapshot.data().userid;
+          two = snapshot.data().userID;
           console.log(two)
           matched = one.filter(function (val) {
             return two.indexOf(val) != -1;
