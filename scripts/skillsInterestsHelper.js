@@ -23,66 +23,99 @@ function cardsSelected(firestoreDocID) {
 }
 
 function retrieveSelectedCards(firestoreDocID) {
-    console.log("retrieveing doc")
-    var docRef = db.collection("users").doc("user03").collection("userChoices").doc(firestoreDocID);
+    var user = firebase.auth().currentUser;
 
-    docRef.get().then((doc) => {
-        if (doc.exists) {
-            console.log("Document data:", doc.data());
-            // if doc.data().
-            const cards = doc.data()
-            for (var field in doc.data()) {
-                console.log(field)
-                console.log(cards[field])
+    firebase.auth().onAuthStateChanged(userN => {
+        if (userN) {
+           console.log("retrieveing doc")
+           var docRef = db.collection("users").doc(userN.uid).collection("userChoices").doc(firestoreDocID);
 
-                if (cards[field]) {
-                    var elem = document.getElementById(field);
-                    elem.classList.toggle('selected')
-                    console.log('card selected')
-                }
-                
+           docRef.get().then((doc) => {
+               if (doc.exists) {
+                   console.log("Document data:", doc.data());
+                   // if doc.data().
+                   const cards = doc.data()
+                   for (var field in doc.data()) {
+                       console.log(field)
+                       console.log(cards[field])
 
-            }
+                       if (cards[field]) {
+                           var elem = document.getElementById(field);
+                           elem.classList.toggle('selected')
+                           console.log('card selected')
+                       }
+
+
+                   }
+               } else {
+                   // doc.data() will be undefined in this case
+                   console.log("No such document!");
+               }
+           }).catch((error) => {
+               console.log("Error getting document:", error);
+           });
         } else {
-            // doc.data() will be undefined in this case
-            console.log("No such document!");
+            // User is signed out.
+            window.location.assign("login.html");
         }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
+    })
+    
 }
 
 function continueClicked(data, firestoreDocID) {
-    const user = firebase.auth().currentUser;
+    var user = firebase.auth().currentUser;
 
-    if (user) {
-        console.log(user.uid)
-    }
-    db.collection("users").doc("user03").collection("userChoices").doc(firestoreDocID).set(data)
-        .then(() => {
-            console.log("Document successfully written!");
-        })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
-        });
+    firebase.auth().onAuthStateChanged(userN => {
+        if (userN) {
+            db.collection("users").doc(userN.uid).collection("userChoices").doc(firestoreDocID).set(data)
+                .then(() => {
+                    console.log("Document successfully written!");
+                })
+                .catch((error) => {
+                    console.error("Error writing document: ", error);
+                });
 
-    for (key in data){
-        console.log(key.replace("card-", ""))
-        const keyString = key.replace("card-", "")
-        var docRef = db.collection(firestoreDocID).doc(keyString)
-        if (data[key]){ //ccheck if data value is true
-            docRef.set({
-                userID: firebase.firestore.FieldValue.arrayUnion(user.uid)
-            },{merge: true});
+            for (key in data) {
+                console.log(key.replace("card-", ""))
+                const keyString = key.replace("card-", "")
+                var docRef = db.collection(firestoreDocID).doc(keyString)
+                if (data[key]) { //ccheck if data value is true
+                    docRef.set({
+                        userID: firebase.firestore.FieldValue.arrayUnion(user.uid)
+                    }, {
+                        merge: true
+                    }).then(() => {
+                        switchPage(firestoreDocID)
+                    });
+                } else {
+                    docRef.set({
+                        userID: firebase.firestore.FieldValue.arrayRemove(user.uid)
+                    }, {
+                        merge: true
+                    }).then(() => {
+                        switchPage(firestoreDocID)
+                    });
+
+                }
+            }
+            
+        } else {
+            // User is signed out.
+            window.location.assign("login.html");
         }
-        else {
-            docRef.set({
-                userID: firebase.firestore.FieldValue.arrayRemove(user.uid)
-            }, {merge: true});
-
-        }
-
-    }
+    })
     
-    db.collection(firestoreDocID).doc()
+
+    
+}
+function switchPage(firestoreDocID) {
+        console.log("firID:", firestoreDocID)
+        if (firestoreDocID == "interests") {
+            console.log("switch page")
+            window.location.assign("chooseSkills.html");
+
+        }
+        if (firestoreDocID == "skills"){
+            window.location.assign("main.html");
+        }
 }

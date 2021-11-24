@@ -10,14 +10,14 @@ var uiConfig = {
 
       //determine whether the user is a new user or not
       if (authResult.additionalUserInfo.isNewUser) {
-        db.collection("Users")
+        db.collection("users")
           .doc(user.uid)
           .set({
             name: user.displayName,
             email: user.email,
           })
           .then(function () {
-            window.location.assign("main.html");
+            window.location.assign("chooseInterests.html");
           })
           .catch(function (error) {
             console.log("error is" + error);
