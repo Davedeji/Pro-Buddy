@@ -13,8 +13,8 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
 
   <!-- Google Icons (Material Design)-->
@@ -72,6 +72,7 @@
 
 
     <button type="button" class="btn btn-primary mb-2" onclick="match()">Submit</button>
+    <button type="button" class="btn btn-primary mb-2" onclick="search()">search</button>
 
     <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
       <i class="material-icons">home</i>
@@ -94,7 +95,7 @@
       db.collection("interests").doc("music").get().then(function (snapshot) {
         one = snapshot.data().userID;
         console.log(one);
-        db.collection("skills").doc("arts").get().then(function (snapshot) {
+        db.collection("skills").doc("arts_crafts").get().then(function (snapshot) {
 
           two = snapshot.data().userID;
           console.log(two)
@@ -106,6 +107,95 @@
 
         })
       });
+
+    }
+
+    function search() {
+      const user = firebase.auth().currentUser;
+      console.log(user.uid)
+      const first_half = [];
+      const second_half = [];
+      let list_two = [];
+      let list_one = [];
+      var another_first = [];
+      var another_second = ['111'];
+      db.collection("interests").where('userID', 'array-contains', user.uid).get().then(snap => {
+
+
+        snap.forEach(doc => {
+
+          list_one.push(doc.id)
+
+
+        });
+        console.log(list_one)
+        for (let x of list_one) {
+          // console.log(x)
+          db.collection('skills').doc(x).get().then(e => {
+            for (let y of e.data().userID) {
+              first_half.push(y)
+            }
+            //   console.log(e.data().userID)
+            // first_half.push(e.data().userID)
+            // console.log(first_half)
+          })
+
+
+        }
+        console.log(first_half)
+
+      })
+
+    }
+
+    function second_search() {
+
+      db.collection("skills").where('userID', 'array-contains', user.uid).get().then(snap => {
+        let list_two = []
+
+        snap.forEach(doc => {
+
+          list_two.push(doc.id)
+
+
+        });
+        console.log(list_two)
+        for (let x of list_two) {
+          // console.log(x)
+          db.collection('interests').doc(x).get().then(e => {
+            for (let y of e.data().userID) {
+              second_half.push(y)
+            }
+            //   console.log(e.data().userID)
+            // first_half.push(e.data().userID)
+            // console.log(first_half)
+          })
+
+          // var matched = first_half.filter(function (val) {
+          //   return second_half.indexOf(val) != -1;
+
+
+          // })
+          // console.log(matched)
+
+
+        }
+
+        console.log(second_half)
+        for (let f of second_half) {
+          another_second.push(f)
+          console.log(another_second)
+        }
+
+
+        for (let z of first_half) {
+          another_first.push(z)
+        }
+        console.log(another_first)
+
+
+      });
+
 
     }
 
