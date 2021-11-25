@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Pro Buddy - Home</title>
+  <meta name="Welcome" content="Pro Buddy">
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+  <!-- Google Icons (Material Design)-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+
+  <script src="/scripts/firebaseAPI.js"></script>
+
+  <!-- Header Component-->
+  <script src="/components/header.js" type="text/javascript" defer></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    #image1 {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    h6 {
+      text-align: center;
+    }
+
+    p {
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Templates for general use, not displayed -->
+  <template id="CardTemplate">
+    <div class="card py-2 mx-2" style="width: 18rem;">
+     
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text" id="uploadDate">Date</p>
+        <p class="card-text" id="uploadDescription">Some quick example text to build on the card title and make up the
+          bulk of the
+          card's content.</p>
+        <a class="btn btn-primary card-href">Download</a>
+      </div>
+    </div>
+  </template>
+
+  <!------------------------------------>
+  <!-- Your own HTML layout goes here -->
+  <!------------------------------------>
+  <div id="nav-placeholder"></div>
+  <div class="container">
+
+
+    <div class="container">
+      <h1>Upload Overview</h1>
+      <!-- Here is container for cards  -->
+      <div class="container">
+        <div id="uploads-go-here" class="row row-cols-auto">
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- <a class="btn btn-primary" role="button" onclick="read_display_Upload()">Upload New Entry</a> -->
+
+
+
+    <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
+      <i class="material-icons">home</i>
+      <i class="material-icons">check</i>
+      <i class="material-icons">language</i>
+      <i class="material-icons">upload_file</i>
+      <i class="material-icons">chat</i>
+
+    </footer>
+
+    <div class="text-center py-5">
+    </div>
+
+
+
+  </div>
+
+  <!--------------------------------------------------->
+  <!-- Your Javascript Libraries and scripts go here -->
+  <!--------------------------------------------------->
+
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+
+
+  <script>
+    function displayCards(collection) {
+      let CardTemplate = document.getElementById("CardTemplate");
+
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          db.collection("uploads").where("ID", "==", user.uid)
+            .get().then(snap => {
+              snap.forEach(doc => {
+                var title = doc.data().title;
+                var description = doc.data().description;
+                var date = doc.data().date.toDate().toDateString();
+                var download = doc.data().download;
+                let newcard = CardTemplate.content.cloneNode(true);
+
+
+
+
+
+                //update title and text and image
+                newcard.querySelector('.card-title').innerHTML = title;
+                newcard.querySelector('#uploadDate').innerHTML = date;
+                newcard.querySelector('#uploadDescription').innerHTML = description;
+                newcard.querySelector('.btn').setAttribute("href", download);
+
+                //attach to gallery
+                document.getElementById("uploads-go-here").appendChild(newcard);
+              })
+
+
+
+
+            })
+
+        }
+      })
+    }
+
+
+
+
+    displayCards();
+  </script>
+
+
+
+</body>
+
+</html>
