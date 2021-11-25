@@ -103,7 +103,7 @@
             return two.indexOf(val) != -1;
 
           })
-          console.log(matched)
+          console.log("this is matched", matched)
 
         })
       });
@@ -133,17 +133,17 @@
           // console.log(x)
           db.collection('skills').doc(x).get().then(e => {
             for (let y of e.data().userID) {
+              console.log(y)
               first_half.push(y)
             }
+            console.log(first_half)
+            second_search()
+
             //   console.log(e.data().userID)
             // first_half.push(e.data().userID)
             // console.log(first_half)
           })
-
-
         }
-        console.log(first_half)
-
       })
 
     }
@@ -159,7 +159,7 @@
 
 
         });
-        console.log(list_two)
+        console.log("this is list 2",list_two)
         for (let x of list_two) {
           // console.log(x)
           db.collection('interests').doc(x).get().then(e => {
@@ -184,14 +184,14 @@
         console.log(second_half)
         for (let f of second_half) {
           another_second.push(f)
-          console.log(another_second)
+          console.log("this is another second",another_second)
         }
 
 
         for (let z of first_half) {
           another_first.push(z)
         }
-        console.log(another_first)
+        console.log("this is another first",another_first)
 
 
       });
