@@ -135,6 +135,8 @@
                 var title = document.createElement("h5");
                 var time = document.createElement("p");
                 var description = document.createElement("p");
+                var downloadButton = document.createElement("a");
+                
 
                 card.setAttribute("class", "card");
                 card.setAttribute("style", "width: 18rem;");
@@ -145,9 +147,13 @@
                 time.appendChild(document.createTextNode(upload.data().date.toDate().toDateString()));
                 description.setAttribute("class", "card-text");
                 description.appendChild(document.createTextNode(upload.data().description));
+                downloadButton.setAttribute("href", upload.data().download);
+                downloadButton.setAttribute("class", "btn");
+                downloadButton.innerHTML = "Download";
                 cardBody.appendChild(title);
                 cardBody.appendChild(time);
                 cardBody.appendChild(description);
+                cardBody.appendChild(downloadButton);
                 card.appendChild(cardBody);
                 tree.appendChild(card);
                 document.getElementById("cardGroup").appendChild(tree);
