@@ -1,0 +1,40 @@
+  .container {
+      background-color: grey;
+  }
+
+  #row1 {
+      background-color: red;
+  }
+
+  .card {
+      height: 200px;
+  }
+
+  p {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+  }
+
+  .card {
+      border: 2px solid black;
+
+  }
+
+  .card-body {
+      max-height: 70px;
+
+  }
+
+  .card-img-top {
+      width: 100%;
+      height: 100%;
+  }
+
+  .highlight-card .card:hover {
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+      background-color: black;
+      color: white;
+  }
