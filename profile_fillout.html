@@ -156,7 +156,7 @@
                  if (user) {
  
                      //go to the correct user document by referencing to the user uid
-                     currentUser = db.collection("Users").doc(user.uid)
+                     currentUser = db.collection("users").doc(user.uid)
                      //get the document for current user.
                      currentUser.get()
                          .then(userDoc => {
@@ -165,6 +165,7 @@
                              // console.log(userName)
                              var userAge = userDoc.data().age;
                              var userCity = userDoc.data().city;
+                             var userDescription = userDoc.data().description;
  
                              //if the data fields are not empty, then write them in to the form.
                              if (userName != null) {
@@ -175,6 +176,9 @@
                              }
                              if (userCity != null) {
                                  document.getElementById("cityInput").value = userCity;
+                             }
+                             if (userDescription != null) {
+                                 document.getElementById("introInput").value = userDescription;
                              }
                          })
                  } else {
@@ -201,14 +205,16 @@
      //grab values from the form that user populated, then put 
      userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
      userAge= document.getElementById('ageInput').value;     //get the value of the field with id="schoolInput"
-     userCity = document.getElementById('cityInput').value;       //get the value of the field with id="cityInput"
+     userCity = document.getElementById('cityInput').value;  
+     userDescription = document.getElementById('introInput').value;      //get the value of the field with id="cityInput"
      // console.log("input is " userName, userAge, userCity)
  
  // write the values into database:
  currentUser.update({
                      name: userName,
                      age: userAge,
-                     city: userCity
+                     city: userCity,
+                     description: userDescription
                  })
                  .then(() => {
                      console.log("Document successfully updated!");
