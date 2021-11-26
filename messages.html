@@ -47,17 +47,39 @@
 
 
 </head>
+<style>
+    /* .card {
+        break-inside: avoid;
+    }
+    .card-columns {
+        column-count: 2;
+    } */
+
+    .card {
+        border-width: 0;
+    }
+
+    .message-container {
+        padding-bottom: 80px;
+    }
+</style>
 
 <body>
     <!-- Import header component in head and use this tag. Done!! -->
     <div id="nav-placeholder"></div>
     <main>
-        <div class="card-deck row-cols-2"
-            id="cardGroup">
+        <div class="message-container">
+            <div class="text-center">
+                <div class="mx-4">
+                    <h4 id="matchedUserName">John Doe</h4>
+                    <p class="text-secondary mb-1" id="matchedUserDescription">Full Stack Developer</p>
+                </div>
+            </div>
 
-        </div>
-        <form>
-            <div class="form-row fixed-bottom align-items-center">
+            <div class="card-deck mb-5 mx-4" id="cardGroup">
+
+            </div>
+            <div class="form-row fixed-bottom align-items-center mx-4">
                 <div class="col-auto">
                     <input type="text" class="form-control mb-2" id="messageInput" placeholder="Type message here">
                 </div>
@@ -65,54 +87,132 @@
                     <button type="button" class="btn btn-primary mb-2" onclick="writeMessage()">Send</button>
                 </div>
             </div>
+        </div>
+
+        <form>
+
         </form>
     </main>
 </body>
 
 <script>
-    function getMessages() {
-        var docRef = db.collection("messages").doc("message01").collection("messages")
-        docRef.onSnapshot((querySnapshot) => {
-            querySnapshot.docChanges().forEach((change) => {
-                // doc.data() is never undefined for query doc snapshots
-                const timeStampDate = change.doc.data().sentAt;
-                console.log(timeStampDate)
-                const dateInMillis = timeStampDate._seconds * 1000
-                var date = new Date(dateInMillis).toDateString() + ' at ' + new Date(dateInMillis).toLocaleTimeString()
-                var card = $(createCard("", change.doc.data().messageText), date)
-                var element = document.getElementById("cardGroup");
-                $('#cardGroup').append(card);
-            });
+    function getMessageId() {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                var docRef = db.collection("users").doc(user.uid)
+                docRef.get().then((doc) => {
+                    if (doc.exists) {
+                        chatID = doc.data().matchChat
+                        otherUserID = doc.data().match
+                        window.localStorage.setItem('chatID', chatID);
+                        console.log(otherUserID, chatID)
+
+                        getOtherUserProperties(otherUserID)
+                        getMessages(chatID)
+                    } else {
+                        console.log("No such document!");
+                    }
+                }).catch((error) => {
+                    console.log("Error getting document:", error);
+                });
+            } else {
+
+            }
         });
     }
-    getMessages();
-    // let cardCount = 0
-    // let cardData = [
-    //     ["Music", "music", "/images/skills_interests/music.jpg"],
-    //     ["Nature", "nature", "/images/skills_interests/nature.jpg"],
-    //     ["Arts & Crafts", "arts_crafts", "/images/skills_interests/arts_crafts.jpg"],
-    //     ["Cooking", "cooking", "/images/skills_interests/cooking.jpg"],
-    //     ["Dance", "dance", "/images/skills_interests/dance.jpg"],
-    //     ["Film & TV", "film_tv", "/images/skills_interests/film_tv.jpg"],
-    // ];
-    // while (cardCount < cardData.length) {
-    //     var card = $(createCard(cardData[cardCount][0], cardData[cardCount][1],
-    //         cardData[cardCount][2]))
-    //     var element = document.getElementById("cardGroup");
-    //     $('#cardGroup').append(card);
-    //     cardCount += 1
+    getMessageId()
+    // function getOtherUser() {
+    //     firebase.auth().onAuthStateChanged((user) => {
+    //         if (user) {
+    //             var docRef = db.collection("messages").doc("message01")
+    //             docRef.get().then((doc) => {
+    //                 if (doc.exists) {
+    //                     users = doc.data().users
+    //                     for (username in users) {
+    //                         if (users[username] != user.uid) {
+    //                             console.log(users[username])
+    //                             getOtherUserProperties(users[username])
+    //                         }
+    //                     }
+    //                 } else {
+    //                     console.log("No such document!");
+    //                 }
+    //             }).catch((error) => {
+    //                 console.log("Error getting document:", error);
+    //             });
+    //         } else {
+
+    //         }
+    //     });
+
     // }
+
+    function getOtherUserProperties(userID) {
+        name = ""
+        description = ""
+        var docRef = db.collection("users").doc(userID)
+
+        docRef.get().then((doc) => {
+            if (doc.exists) {
+                name = doc.data().name
+                description = doc.data().description
+                updateMatchedUserDisplay(name, description)
+            } else {
+                console.log("No such document!");
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+    }
+
+    function updateMatchedUserDisplay(name, description) {
+        document.getElementById("matchedUserName").innerHTML = name
+        document.getElementById("matchedUserDescription").innerHTML = description
+    }
+
+    function getMessages(chatID) {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                var docRef = db.collection("messages").doc(chatID).collection("messages")
+                docRef.orderBy("sentAt").onSnapshot((querySnapshot) => {
+                    querySnapshot.docChanges().forEach((change) => {
+                        // doc.data() is never undefined for query doc snapshots
+                        const timeStampDate = change.doc.data().sentAt;
+                        let date = change.doc.data().sentAt
+                        date = date.toDate()
+                        let time = date.toLocaleTimeString("en-us", {
+                            timeStyle: 'short'
+                        });
+                        date = date.toLocaleDateString("en-us", {
+                            dateStyle: 'medium'
+                        });
+                        let finalDate = date + " " + time
+                        var card = $(createCard("", change.doc.data().messageText, finalDate,
+                            user
+                            .uid == change.doc.data().sentBy))
+                        var element = document.getElementById("cardGroup");
+                        $('#cardGroup').append(card);
+                    });
+                    window.scrollTo(0, document.body.scrollHeight)
+                });
+            } else {
+                // User is signed out
+                // ...
+            }
+        });
+
+    }
 
     function writeMessage() {
         const user = firebase.auth().currentUser;
         if (user) {
-            // User logged in already or has just logged in.
-            var docRef = db.collection("messages").doc("message01").collection("messages");
+            // User logged in already or has just logged in.sd
+            var chatID = window.localStorage.getItem('chatID');
+            var docRef = db.collection("messages").doc(chatID).collection("messages");
             docRef.add({
                     "messageText": document.getElementById("messageInput").value,
                     "sentAt": firebase.firestore.Timestamp.fromDate(new Date()),
                     "sentBy": user.uid
-
                 })
                 .then(() => {
                     console.log("Document successfully written!");
@@ -127,14 +227,26 @@
 
     }
 
-    function createCard(title, message, sentAt) {
-        return `<div class="card" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">${title}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">${sentAt}</h6>
-            <p class="card-text">${message}</p>
-        </div>
-    </div>`;
+    function createCard(title, message, sentAt, isSender) {
+        console.log(isSender)
+        if (isSender == true) {
+            return `<div class="card text-end" style="">
+                <div class="card-body ">
+                    <h5 class="card-title">${title}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${sentAt}</h6>
+                    <p class="card-text">${message}</p>
+                </div>
+            </div>`;
+        } else {
+            return `<div class="card" style="">
+                <div class="card-body ">
+                    <h5 class="card-title">${title}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">${sentAt}</h6>
+                    <p class="card-text">${message}</p>
+                </div>
+            </div>`;
+        }
+
     }
 </script>
 
