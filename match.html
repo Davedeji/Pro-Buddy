@@ -89,104 +89,69 @@
 
   <script>
     function match() {
+      const user = firebase.auth().currentUser;
       var matched = [];
       search(first_half => {
         second_search(second_half => {
-          console.log(first_half, second_half)
           const secondItems = new Set(second_half)
           const intersection = first_half.filter(x => secondItems.has(x))
           console.log(intersection)
+          db.collection("users").doc(user.uid).set({
+            match: intersection[0]
+          }, {merge: true});
+
         })
       })
     }
 
+    // async function match() {
+    //   const a = search();
+    //   const b = second_search();
 
+    //   return Promise.all(a.filter(x => b.has(x)))
+    // }
 
-
-
-
-    
+   
     // This function calls the callback with all userID that has common interests as current user
     function search(callback) {
       const user = firebase.auth().currentUser;
       console.log(user.uid)
       let first_half = [];
-
-
       let list_one = [];
       db.collection("interests").where('userID', 'array-contains', user.uid).get().then(snap => {
         snap.forEach(doc => {
           list_one.push(doc.id)
         });
-        console.log(list_one)
 
-        // for (let x of list_one) {
-        //   // console.log(x)
-        //   db.collection('skills').doc(x).get().then(e => {
-        //     for (let y of e.data().userID) {
-        //       console.log(y)
-        //       first_half.push(y)
-        //     }       
-        //   })
-        //   console.log(first_half)
-        // }
         for (let i = 0; i < list_one.length; i++) {
           db.collection('skills').doc(list_one[i]).get().then(l => {
             for (let w of l.data().userID) {
-              console.log(w)
               first_half.push(w)
             }
-            console.log(first_half)
             callback(first_half)
           })
         }
-
-
-
-
-
-
       })
-
-
-
-
     }
+
 
     function second_search(callback) {
       const user = firebase.auth().currentUser;
       const second_half = [];
-
-
       db.collection("skills").where('userID', 'array-contains', user.uid).get().then(snap => {
         let list_two = []
         snap.forEach(doc => {
           list_two.push(doc.id)
         });
-
-        // for (let x of list_two) {
-        //   // console.log(x)
-        //   db.collection('interests').doc(x).get().then(e => {
-        //     for (let y of e.data().userID) {
-        //       second_half.push(y)
-        //     }         
-        //   })
-        // }
+      
         for (let i = 0; i < list_two.length; i++) {
           db.collection('skills').doc(list_two[i]).get().then(l => {
-            for (let w of l.data().userID) {
-              console.log(w)
+            for (let w of l.data().userID) {              
               second_half.push(w)
-            }
-            console.log(second_half)
+            }           
             callback(second_half)
-
-
           })
         }
-
-
-
       });
 
     }
