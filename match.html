@@ -71,9 +71,8 @@
 
 
 
-    <button type="button" class="btn btn-primary mb-2" onclick="match()">Submit</button>
-    <button type="button" class="btn btn-primary mb-2" onclick="search()">search</button>
-    <button type="button" class="btn btn-primary mb-2" onclick="second_search()">second</button>
+    <button type="button" class="btn btn-primary mb-2" onclick="match()">Match</button>
+    <button type="button" class="btn btn-primary mb-2" onclick="sync_match()">Sync</button>
 
     <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
       <i class="material-icons">home</i>
@@ -99,8 +98,19 @@
           db.collection("users").doc(user.uid).set({
             match: intersection[0]
           }, {merge: true});
-
+          
         })
+      })
+    }
+
+    function sync_match() {
+      const user = firebase.auth().currentUser;
+      db.collection("users").doc(user.uid).get().then(snap => {
+        var matched_user_uid = snap.data().match
+        db.collection("users").doc(matched_user_uid).set({
+          match: user.uid
+        }, {merge: true});
+        console.log("writing current user ID into matched user doc")
       })
     }
 
