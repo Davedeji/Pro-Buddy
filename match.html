@@ -73,6 +73,7 @@
 
     <button type="button" class="btn btn-primary mb-2" onclick="match()">Submit</button>
     <button type="button" class="btn btn-primary mb-2" onclick="search()">search</button>
+    <button type="button" class="btn btn-primary mb-2" onclick="second_search()">second</button>
 
     <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
       <i class="material-icons">home</i>
@@ -88,116 +89,113 @@
 
   <script>
     function match() {
-      const user = firebase.auth().currentUser;
-      var one = [];
-      var two = [];
       var matched = [];
-      db.collection("interests").doc("music").get().then(function (snapshot) {
-        one = snapshot.data().userID;
-        console.log(one);
-        db.collection("skills").doc("arts_crafts").get().then(function (snapshot) {
-
-          two = snapshot.data().userID;
-          console.log(two)
-          matched = one.filter(function (val) {
-            return two.indexOf(val) != -1;
-
-          })
-          console.log("this is matched", matched)
-
+      search(first_half => {
+        second_search(second_half => {
+          console.log(first_half, second_half)
+          const secondItems = new Set(second_half)
+          const intersection = first_half.filter(x => secondItems.has(x))
+          console.log(intersection)
         })
-      });
-
+      })
     }
 
-    function search() {
+
+
+
+
+
+    
+    // This function calls the callback with all userID that has common interests as current user
+    function search(callback) {
       const user = firebase.auth().currentUser;
       console.log(user.uid)
-      const first_half = [];
-      const second_half = [];
-      let list_two = [];
+      let first_half = [];
+
+
       let list_one = [];
-      var another_first = [];
-      var another_second = ['111'];
       db.collection("interests").where('userID', 'array-contains', user.uid).get().then(snap => {
-
-
         snap.forEach(doc => {
-
           list_one.push(doc.id)
-
-
         });
         console.log(list_one)
-        for (let x of list_one) {
-          // console.log(x)
-          db.collection('skills').doc(x).get().then(e => {
-            for (let y of e.data().userID) {
-              console.log(y)
-              first_half.push(y)
+
+        // for (let x of list_one) {
+        //   // console.log(x)
+        //   db.collection('skills').doc(x).get().then(e => {
+        //     for (let y of e.data().userID) {
+        //       console.log(y)
+        //       first_half.push(y)
+        //     }       
+        //   })
+        //   console.log(first_half)
+        // }
+        for (let i = 0; i < list_one.length; i++) {
+          db.collection('skills').doc(list_one[i]).get().then(l => {
+            for (let w of l.data().userID) {
+              console.log(w)
+              first_half.push(w)
             }
             console.log(first_half)
-            second_search()
-
-            //   console.log(e.data().userID)
-            // first_half.push(e.data().userID)
-            // console.log(first_half)
+            callback(first_half)
           })
         }
+
+
+
+
+
+
       })
+
+
+
 
     }
 
-    function second_search() {
+    function second_search(callback) {
+      const user = firebase.auth().currentUser;
+      const second_half = [];
+
 
       db.collection("skills").where('userID', 'array-contains', user.uid).get().then(snap => {
         let list_two = []
-
         snap.forEach(doc => {
-
           list_two.push(doc.id)
-
-
         });
-        console.log("this is list 2",list_two)
-        for (let x of list_two) {
-          // console.log(x)
-          db.collection('interests').doc(x).get().then(e => {
-            for (let y of e.data().userID) {
-              second_half.push(y)
+
+        // for (let x of list_two) {
+        //   // console.log(x)
+        //   db.collection('interests').doc(x).get().then(e => {
+        //     for (let y of e.data().userID) {
+        //       second_half.push(y)
+        //     }         
+        //   })
+        // }
+        for (let i = 0; i < list_two.length; i++) {
+          db.collection('skills').doc(list_two[i]).get().then(l => {
+            for (let w of l.data().userID) {
+              console.log(w)
+              second_half.push(w)
             }
-            //   console.log(e.data().userID)
-            // first_half.push(e.data().userID)
-            // console.log(first_half)
+            console.log(second_half)
+            callback(second_half)
+
+
           })
-
-          // var matched = first_half.filter(function (val) {
-          //   return second_half.indexOf(val) != -1;
-
-
-          // })
-          // console.log(matched)
-
-
         }
 
-        console.log(second_half)
-        for (let f of second_half) {
-          another_second.push(f)
-          console.log("this is another second",another_second)
-        }
-
-
-        for (let z of first_half) {
-          another_first.push(z)
-        }
-        console.log("this is another first",another_first)
 
 
       });
 
-
     }
+
+
+
+
+
+
 
 
 
