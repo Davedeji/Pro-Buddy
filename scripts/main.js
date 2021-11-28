@@ -154,9 +154,11 @@ function displayMatchedProfilePic() {
 
             
             var match = snap.data().match;
+            console.log(match)
             db.collection("users").doc(match).get().then(e => {
                 var matchProfilePic = e.data().profilePic
-                $("#profilePic").attr("src", matchProfilePic);
+                console.log(matchProfilePic)
+                $("#matchedProfilePic").attr("src", matchProfilePic);
                 emptypic();
             })
             
@@ -168,9 +170,9 @@ function displayMatchedProfilePic() {
 displayMatchedProfilePic();
 
 function emptypic() {
-    var x = document.getElementById("profilePic").getAttribute("src");
+    var x = document.getElementById("matchedProfilePic").getAttribute("src");
     if (x == "" || x == null) {
-        $("#profilePic").attr("src", "https://bootdey.com/img/Content/avatar/avatar7.png");
+        $("#matchedProfilePic").attr("src", "https://bootdey.com/img/Content/avatar/avatar7.png");
     }
     
 }
