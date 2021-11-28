@@ -143,68 +143,36 @@ function createUploadCard(id, title, date) {
 }
 getRecentUploads()
 
-function AddUploadListener() {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            console.log(user.uid)
-            const fileInput = document.getElementById("profilePicFile"); // pointer #1
-            const image = document.getElementById("profilePic"); // pointer #2
 
-            //attach listener to input file
-            //when this file changes, do something
-            fileInput.addEventListener('change', function (e) {
 
-                //the change event returns a file "e.target.files[0]"
-                var blob = URL.createObjectURL(e.target.files[0]);
-                var targetfile = (e.target.files[0]);
-
-                //change the DOM img element source to point to this file
-                image.src = blob; //assign the "src" property of the "img" tag
-
-                //do database stuff:  add to menu collection
-                storeImage(user.uid, targetfile);
-            })
-        } else { console.log("no user signed in") }
-    });
-}
-
-AddUploadListener();
-
-function storeImage(userid, pickedfile) {
-    var storageRef = firebase.storage().ref("images/" + userid + ".jpg"); // Get reference
-    var metadata = {
-        contentType: 'image/jpeg',
-    };
-
-    // Upload picked file to cloud storage
-    storageRef.put(pickedfile, metadata)
-        .then(function () {
-            storageRef.getDownloadURL() //get URL of the uploade file
-                .then(function (url) {
-                    console.log(url); // Save the URL into users collection
-                    db.collection("users").doc(userid).update({
-                        "profilePic": url
-                    })
-                })
-        });
-
-}
-
-function displayProfilePic() {
+function displayMatchedProfilePic() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
     db.collection("users").doc(user.uid)
         .get()
         .then(function (snap) {
 
-            //console.log(doc.data());
-            var profilePic = snap.data().profilePic;
-            //console.log("#" + doc.data().name + "menu");
-            //console.log(menuPic);
-            $("#profilePic").attr("src", profilePic);
+            
+            var match = snap.data().match;
+            db.collection("users").doc(match).get().then(e => {
+                var matchProfilePic = e.data().profilePic
+                $("#profilePic").attr("src", matchProfilePic);
+                emptypic();
+            })
+            
 
         })
     }
 })
 }
-displayProfilePic();
+displayMatchedProfilePic();
+
+function emptypic() {
+    var x = document.getElementById("profilePic").getAttribute("src");
+    if (x == "" || x == null) {
+        $("#profilePic").attr("src", "https://bootdey.com/img/Content/avatar/avatar7.png");
+    }
+    
+}
+
+
