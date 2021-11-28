@@ -3,6 +3,7 @@ function getMatchedUser() {
         if (user) {
             var uid = user.uid;
             var docRef = db.collection("users").doc(user.uid)
+            console.log(user.uid)
 
             docRef.get().then((doc) => {
                 if (doc.exists) {

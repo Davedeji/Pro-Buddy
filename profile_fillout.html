@@ -283,6 +283,34 @@
         });
 
     }
+
+    function displayProfilePic() {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          db.collection("users").doc(user.uid)
+            .get()
+            .then(function (snap) {
+
+
+              var pic = snap.data().profilePic;
+              
+              $("#profilePic").attr("src", pic);
+                emptypic();
+
+
+            })
+        }
+      })
+    }
+    displayProfilePic();
+
+    function emptypic() {
+      var x = document.getElementById("profilePic").getAttribute("src");
+      if (x == "" || x == null) {
+        $("#profilePic").attr("src", "https://bootdey.com/img/Content/avatar/avatar7.png");
+      }
+
+    }
   </script>
 
 
