@@ -1,3 +1,6 @@
+function messageClicked() {
+    location.href = "/messages.html";
+}
 function getMatchedUser() {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
