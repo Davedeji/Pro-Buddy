@@ -31,6 +31,7 @@
   <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
   <script src="./scripts/firebaseAPI.js"></script>
+  <script src="/components/header.js" type="text/javascript" defer></script>
 
 
 
@@ -70,32 +71,9 @@
   <!------------------------------------>
   <!-- Your own HTML layout goes here -->
   <!------------------------------------>
-  <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="images/Logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-        Probuddy
-      </a>
-
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-          <a class="nav-link" href="#">Interest</a>
-          <a class="nav-link" href="#">Skills</a>
-          <a class="nav-link" href="#">Progress</a>
-          <a class="nav-link" href="#">Checkin</a>
-          <a class="nav-link" href="#">Chat</a>
-          <a class="nav-link" href="#">FAQ/Help</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <div id="nav-placeholder"></div>
   <div class="container">
+    <a href="./main.html"><button class="btn btn-outline-primary">&lt;</button></a>
     <h1>User Profile </h1>
 
     <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150"
