@@ -182,3 +182,85 @@ function emptypic() {
 }
 
 
+
+function create_UUID() {
+    var dt = new Date().getTime();
+    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = (dt + Math.random() * 16) % 16 | 0;
+      dt = Math.floor(dt / 16);
+      return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid;
+  }
+  function match() {
+    const user = firebase.auth().currentUser;
+    var matched = [];
+    search(first_half => {
+      second_search(second_half => {
+        const secondItems = new Set(second_half)
+        const intersection = first_half.filter(x => secondItems.has(x))
+        console.log(intersection)
+        db.collection("users").doc(user.uid).set({
+          match: intersection[0]
+        }, {merge: true});
+        
+      })
+    })
+  }
+
+  function sync_match() {
+    const user = firebase.auth().currentUser;
+    db.collection("users").doc(user.uid).get().then(snap => {
+      var matched_user_uid = snap.data().match
+      db.collection("users").doc(matched_user_uid).set({
+        match: user.uid
+      }, {merge: true});
+      console.log("writing current user ID into matched user doc")
+    })
+  }
+
+ 
+  function search(callback) {
+    const user = firebase.auth().currentUser;
+    console.log(user.uid)
+    let first_half = [];
+    let list_one = [];
+    db.collection("interests").where('userID', 'array-contains', user.uid).get().then(snap => {
+      snap.forEach(doc => {
+        list_one.push(doc.id)
+      });
+
+      for (let i = 0; i < list_one.length; i++) {
+        db.collection('skills').doc(list_one[i]).get().then(l => {
+          for (let w of l.data().userID) {
+            first_half.push(w)
+          }
+          callback(first_half)
+        })
+      }
+    })
+  }
+
+
+  function second_search(callback) {
+    const user = firebase.auth().currentUser;
+    const second_half = [];
+    db.collection("skills").where('userID', 'array-contains', user.uid).get().then(snap => {
+      let list_two = []
+      snap.forEach(doc => {
+        list_two.push(doc.id)
+      });
+    
+      for (let i = 0; i < list_two.length; i++) {
+        db.collection('skills').doc(list_two[i]).get().then(l => {
+          for (let w of l.data().userID) {              
+            second_half.push(w)
+          }           
+          callback(second_half)
+        })
+      }
+    });
+
+  }
+
+
