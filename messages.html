@@ -96,19 +96,15 @@
 </body>
 
 <script>
-    function getMessageId() {
+    function getUserIDs() {
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 var docRef = db.collection("users").doc(user.uid)
                 docRef.get().then((doc) => {
                     if (doc.exists) {
-                        chatID = doc.data().matchChat
                         otherUserID = doc.data().match
-                        window.localStorage.setItem('chatID', chatID);
-                        console.log(otherUserID, chatID)
-
+                        startMessage(user.uid, otherUserID)
                         getOtherUserProperties(otherUserID)
-                        getMessages(chatID)
                     } else {
                         console.log("No such document!");
                     }
@@ -120,32 +116,35 @@
             }
         });
     }
-    getMessageId()
-    // function getOtherUser() {
-    //     firebase.auth().onAuthStateChanged((user) => {
-    //         if (user) {
-    //             var docRef = db.collection("messages").doc("message01")
-    //             docRef.get().then((doc) => {
-    //                 if (doc.exists) {
-    //                     users = doc.data().users
-    //                     for (username in users) {
-    //                         if (users[username] != user.uid) {
-    //                             console.log(users[username])
-    //                             getOtherUserProperties(users[username])
-    //                         }
-    //                     }
-    //                 } else {
-    //                     console.log("No such document!");
-    //                 }
-    //             }).catch((error) => {
-    //                 console.log("Error getting document:", error);
-    //             });
-    //         } else {
+    getUserIDs()
 
-    //         }
-    //     });
+    function createMessage(userID, otherUserID) {
+        setData = {}
+        users = {}
+        users[otherUserID] = true
+        users[userID] = true
+        setData["users"] = users
+        console.log(setData)
+        var doc = db.collection("messages").doc()
+        doc.set(setData).then(() => {
+            window.localStorage.setItem('chatID', doc.id);
+            getMessages(doc.id)
+        })
+    }
 
-    // }
+    function startMessage(userID, otherUserID) {
+        let ref = db.collection("messages").where('users.' + userID, '==', true).where('users.' + otherUserID, '==',
+            true)
+        ref.get()
+            .then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    getMessages(querySnapshot.docs[0].id)
+                    window.localStorage.setItem('chatID', querySnapshot.docs[0].id);
+                } else {
+                    createMessage(userID, otherUserID)
+                }
+            })
+    }
 
     function getOtherUserProperties(userID) {
         name = ""
