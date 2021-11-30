@@ -13,12 +13,18 @@ function upload(form) {
                 date: firebase.firestore.FieldValue.serverTimestamp(),
                 ID: user.uid,
                 download: url
-            });
+            }).then(() => {
+                window.location.assign("newUploadOverview.html");
+            })
         })
         if (user) {
             userUID = user.uid
             console.log(userUID)
         }
-        uploadTask
+        
+
+        
     })
+    uploadTask
+    
 }
