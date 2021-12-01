@@ -40,32 +40,16 @@
     <script src="/scripts/firebaseAPI.js"></script>
 
     <!-- Custom CSS & JS -->
-
+      <script src="/scripts/messages.js"></script>
+      <link rel="stylesheet" href="styles/messages.css">
+      <link rel="stylesheet" href="styles/colors.css">
 
     <!-- Header Component-->
     <script src="/components/header.js" type="text/javascript" defer></script>
 
 
 </head>
-<style>
-    /* .card {
-        break-inside: avoid;
-    }
-    .card-columns {
-        column-count: 2;
-    } */
-
-    .card {
-        border-width: 0;
-    }
-
-    .message-container {
-        padding-bottom: 80px;
-    }
-</style>
-
 <body>
-    <!-- Import header component in head and use this tag. Done!! -->
     <div id="nav-placeholder"></div>
     <main>
         <div class="message-container">
@@ -94,159 +78,4 @@
         </form>
     </main>
 </body>
-
-<script>
-    function getUserIDs() {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                var docRef = db.collection("users").doc(user.uid)
-                docRef.get().then((doc) => {
-                    if (doc.exists) {
-                        otherUserID = doc.data().match
-                        startMessage(user.uid, otherUserID)
-                        getOtherUserProperties(otherUserID)
-                    } else {
-                        console.log("No such document!");
-                    }
-                }).catch((error) => {
-                    console.log("Error getting document:", error);
-                });
-            } else {
-
-            }
-        });
-    }
-    getUserIDs()
-
-    function createMessage(userID, otherUserID) {
-        setData = {}
-        users = {}
-        users[otherUserID] = true
-        users[userID] = true
-        setData["users"] = users
-        console.log(setData)
-        var doc = db.collection("messages").doc()
-        doc.set(setData).then(() => {
-            window.localStorage.setItem('chatID', doc.id);
-            getMessages(doc.id)
-        })
-    }
-
-    function startMessage(userID, otherUserID) {
-        let ref = db.collection("messages").where('users.' + userID, '==', true).where('users.' + otherUserID, '==',
-            true)
-        ref.get()
-            .then((querySnapshot) => {
-                if (!querySnapshot.empty) {
-                    getMessages(querySnapshot.docs[0].id)
-                    window.localStorage.setItem('chatID', querySnapshot.docs[0].id);
-                } else {
-                    createMessage(userID, otherUserID)
-                }
-            })
-    }
-
-    function getOtherUserProperties(userID) {
-        name = ""
-        description = ""
-        var docRef = db.collection("users").doc(userID)
-
-        docRef.get().then((doc) => {
-            if (doc.exists) {
-                name = doc.data().name
-                description = doc.data().description
-                updateMatchedUserDisplay(name, description)
-            } else {
-                console.log("No such document!");
-            }
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-    }
-
-    function updateMatchedUserDisplay(name, description) {
-        document.getElementById("matchedUserName").innerHTML = name
-        document.getElementById("matchedUserDescription").innerHTML = description
-    }
-
-    function getMessages(chatID) {
-        firebase.auth().onAuthStateChanged((user) => {
-            if (user) {
-                var docRef = db.collection("messages").doc(chatID).collection("messages")
-                docRef.orderBy("sentAt").onSnapshot((querySnapshot) => {
-                    querySnapshot.docChanges().forEach((change) => {
-                        // doc.data() is never undefined for query doc snapshots
-                        const timeStampDate = change.doc.data().sentAt;
-                        let date = change.doc.data().sentAt
-                        date = date.toDate()
-                        let time = date.toLocaleTimeString("en-us", {
-                            timeStyle: 'short'
-                        });
-                        date = date.toLocaleDateString("en-us", {
-                            dateStyle: 'medium'
-                        });
-                        let finalDate = date + " " + time
-                        var card = $(createCard("", change.doc.data().messageText, finalDate,
-                            user
-                            .uid == change.doc.data().sentBy))
-                        var element = document.getElementById("cardGroup");
-                        $('#cardGroup').append(card);
-                    });
-                    window.scrollTo(0, document.body.scrollHeight)
-                });
-            } else {
-                // User is signed out
-                // ...
-            }
-        });
-
-    }
-
-    function writeMessage() {
-        const user = firebase.auth().currentUser;
-        if (user) {
-            // User logged in already or has just logged in.sd
-            var chatID = window.localStorage.getItem('chatID');
-            var docRef = db.collection("messages").doc(chatID).collection("messages");
-            docRef.add({
-                    "messageText": document.getElementById("messageInput").value,
-                    "sentAt": firebase.firestore.Timestamp.fromDate(new Date()),
-                    "sentBy": user.uid
-                })
-                .then(() => {
-                    console.log("Document successfully written!");
-                    document.getElementById("messageInput").value = ""
-                })
-                .catch((error) => {
-                    console.error("Error writing document: ", error);
-                });
-        } else {
-            // User not logged in or has just logged out.
-        }
-
-    }
-
-    function createCard(title, message, sentAt, isSender) {
-        console.log(isSender)
-        if (isSender == true) {
-            return `<div class="card text-end" style="">
-                <div class="card-body ">
-                    <h5 class="card-title">${title}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">${sentAt}</h6>
-                    <p class="card-text">${message}</p>
-                </div>
-            </div>`;
-        } else {
-            return `<div class="card" style="">
-                <div class="card-body ">
-                    <h5 class="card-title">${title}</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">${sentAt}</h6>
-                    <p class="card-text">${message}</p>
-                </div>
-            </div>`;
-        }
-
-    }
-</script>
-
 </html>

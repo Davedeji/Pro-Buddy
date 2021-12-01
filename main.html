@@ -40,11 +40,12 @@
   <!-- Custom CSS & JS -->
   <script src="/scripts/main.js"></script>
   <link rel="stylesheet" href="styles/main.css">
+  
 
 </head>
 <body onload="loadNav(false)">
+  <div id="nav-placeholder"></div>
   <div class="container-fluid min-100 d-flex flex-column">
-    <div id="nav-placeholder"></div>
     <div class="row gutters-sm">
       <h2>Active Match</h2>
       <div class="col mb-3">
@@ -58,7 +59,7 @@
                 <p class="text-secondary mb-1" id="matchedUserDescription">Full Stack Developer</p>
               </div>
               <div class="">
-                <button class="btn btn-outline-primary" id="message-btn" onclick=messageClicked()>Message</button>
+                <button class="btn btn-outline-primary" id="message-btn" onclick="messageClicked()">Message</button>
                 <button class="btn btn-outline-primary" onclick="match()">Match</button>
                 <button class="btn btn-outline-primary" onclick="sync_match()">Sync</button>
               </div>
@@ -74,6 +75,13 @@
       <h2>Uploads</h2>
     </div>
   </div>
+      <footer class="navbar justify-content-evenly fixed-bottom">
+        <i class="material-icons">home</i>
+        <i class="material-icons">check</i>
+        <i class="material-icons">language</i>
+        <i class="material-icons">upload_file</i>
+        <i class="material-icons">chat</i>
+      </footer>
 
 </body>
 </html>

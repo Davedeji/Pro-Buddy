@@ -1,3 +1,7 @@
+  
+  #nav-placeholder {
+        padding-bottom: 20px;
+  }
   .container {
       background-color: grey;
   }
@@ -8,6 +12,7 @@
 
   .card {
       height: 200px;
+      border: 2px solid #424342;
   }
 
   p {
@@ -17,12 +22,6 @@
       overflow: hidden;
       text-overflow: ellipsis;
   }
-
-  .card {
-      border: 2px solid black;
-
-  }
-
   .card-body {
       max-height: 70px;
 
@@ -35,6 +34,27 @@
 
   .highlight-card .card:hover {
       box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
-      background-color: black;
+      border-color: #204C7D;
+      background-color: #204C7D;
       color: white;
   }
+   h2 {
+       color: #424342
+   }
+   .btn-outline-primary {
+       border-width: 2px;
+       border-color: #204C7D;
+       color: #204C7D;
+   }
+   .btn-outline-primary:hover {
+       border-color: #204C7D;
+       background-color: #204C7D;
+       outline-color: #204C7D;
+       color: white;
+   }
+   .navbar {
+       background-color: #204C7D;
+   }
+   footer i {
+       color: #9FBFDC;
+   }
