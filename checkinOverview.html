@@ -28,6 +28,7 @@
 
   <!-- Header Component-->
   <script src="/components/header.js" type="text/javascript" defer></script>
+  <script src="/scripts/checkinOverview.js"></script>
 
   <style>
     * {
@@ -64,14 +65,14 @@
   <!-- Templates for general use, not displayed -->
   <template id="CardTemplate">
     <div class="card py-2 mx-2" style="width: 18rem;">
-     
+
       <div class="card-body">
-        
+
         <p class="card-text" id="uploadDate">Date</p>
         <p class="card-text" id="uploadDescription">Some quick example text to build on the card title and make up the
           bulk of the
           card's content.</p>
-        
+
       </div>
     </div>
   </template>
@@ -92,13 +93,6 @@
         </div>
       </div>
     </div>
-
-
-
-    <!-- <a class="btn btn-primary" role="button" onclick="read_display_Upload()">Upload New Entry</a> -->
-
-
-
     <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
       <i class="material-icons">home</i>
       <i class="material-icons">check</i>
@@ -107,67 +101,7 @@
       <i class="material-icons">chat</i>
 
     </footer>
-
-    <div class="text-center py-5">
-    </div>
-
-
-
   </div>
-
-  <!--------------------------------------------------->
-  <!-- Your Javascript Libraries and scripts go here -->
-  <!--------------------------------------------------->
-
-  <!-- Option 1: Bootstrap Bundle with Popper -->
-
-
-  <script>
-    function displayCards(collection) {
-      let CardTemplate = document.getElementById("CardTemplate");
-
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          db.collection("checkin").where("User", "==", user.uid)
-            .get().then(snap => {
-              snap.forEach(doc => {
-                
-                var description = doc.data().Notes;
-                var date = doc.data().Time.toDate().toDateString();
-                
-                let newcard = CardTemplate.content.cloneNode(true);
-
-
-
-
-
-                //update title and text and image
-                
-                newcard.querySelector('#uploadDate').innerHTML = date;
-                newcard.querySelector('#uploadDescription').innerHTML = description;
-                
-
-                //attach to gallery
-                document.getElementById("uploads-go-here").appendChild(newcard);
-              })
-
-
-
-
-            })
-
-        }
-      })
-    }
-
-
-
-
-    displayCards();
-  </script>
-
-
-
 </body>
 
 </html>
