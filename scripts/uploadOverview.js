@@ -7,7 +7,7 @@ function displayCards(collection) {
       // query through uploads collection to get current user's uploads
       db.collection("uploads").where("ID", "==", user.uid)
         .get().then(snap => {
-          // record data for all uploads that meet query specification
+          // read data of all uploads that meet query specification
           snap.forEach(doc => {
             var title = doc.data().title;
             var description = doc.data().description;
