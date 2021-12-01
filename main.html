@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Pro Buddy - Home</title>
+  <title>PB | Home</title>
   <meta name="Welcome" content="Pro Buddy">
 
   <!-- Required meta tags -->
@@ -37,12 +37,15 @@
   <!-- Header Component-->
   <script src="/components/header.js" type="text/javascript" defer></script>
 
+  <!-- Footer Component-->
+  <script src="/components/footer.js" type="text/javascript" defer></script>
+
   <!-- Custom CSS & JS -->
   <script src="/scripts/main.js"></script>
   <link rel="stylesheet" href="styles/main.css">
   
-
 </head>
+
 <body onload="loadNav(false)">
   <div id="nav-placeholder"></div>
   <div class="container-fluid min-100 d-flex flex-column">
@@ -53,7 +56,7 @@
           <div class="card-body">
             <div class="d-flex flex-row align-items-center text-start">
               <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle"
-                width="150" id="matchedProfilePic">
+                width="150" height="150" id="matchedProfilePic">
               <div class="mx-4">
                 <h4 id="matchedUserName">John Doe</h4>
                 <p class="text-secondary mb-1" id="matchedUserDescription">Full Stack Developer</p>
@@ -75,13 +78,7 @@
       <h2>Uploads</h2>
     </div>
   </div>
-      <footer class="navbar justify-content-evenly fixed-bottom">
-        <i class="material-icons">home</i>
-        <i class="material-icons">check</i>
-        <i class="material-icons">language</i>
-        <i class="material-icons">upload_file</i>
-        <i class="material-icons">chat</i>
-      </footer>
-
+  <div id="footer-placeholder"></div>
 </body>
+
 </html>

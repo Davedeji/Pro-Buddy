@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Pro Buddy - Skills</title>
+    <title>Choose Skills</title>
     <meta name="Welcome" content="Pro Buddy">
 
     <!-- Required meta tags -->
@@ -13,7 +13,6 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
 
     <!-- Google Icons (Material Design) -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -34,50 +33,27 @@
 
     <!-- Custom CSS & JS -->
     <script src="/scripts/skillsInterestsHelper.js"></script>
+    <script src="/scripts/chooseSkills.js" defer></script>
     <link rel="stylesheet" href="styles/skillsInterests.css">
     <link rel="stylesheet" href="styles/colors.css">
 
 
     <!-- Header Component-->
     <script src="/components/header.js" type="text/javascript" defer></script>
-    
+
 </head>
 
 <body>
     <div id="nav-placeholder"></div>
+
     <h2>What are you good at?</h2>
     <h5>Choose 3 or more</h5>
     <div class="card-deck row mx-4 row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6" id="cardGroup">
-
     </div>
 
     <div class="col text-center">
-        <button type="button" class="btn center btn-primary mb-2" onclick="cardsSelected('skills')">Continue</button>
+        <button type="button" class="btn center btn-outline-primary btn-30-percent mb-2" onclick="cardsSelected('skills')">Continue</button>
     </div>
 </body>
-<script>
-    let cardCount = 0
-    let cardData = [
-        ["Music", "music", "/images/skills_interests/music.jpg"],
-        ["Nature", "nature", "/images/skills_interests/nature.jpg"],
-        ["Arts & Crafts", "arts_crafts", "/images/skills_interests/arts_crafts.jpg"],
-        ["Cooking", "cooking", "/images/skills_interests/cooking.jpg"],
-        ["Dance", "dance", "/images/skills_interests/dance.jpg"],
-        ["Film & TV", "film_tv", "/images/skills_interests/film_tv.jpg"],
-    ];
-    while (cardCount < cardData.length) {
-        var card = $(createCard(cardData[cardCount][0], cardData[cardCount][1], cardData[cardCount][2]))
-        var element = document.getElementById("cardGroup");
-        $('#cardGroup').append(card);
-        cardCount += 1
-    }
-
-    document.querySelectorAll('.col').forEach(item => {
-        item.addEventListener('click', event => {
-            item.firstElementChild.classList.toggle('selected')
-        })
-    })
-    retrieveSelectedCards('skills');
-</script>
 
 </html>

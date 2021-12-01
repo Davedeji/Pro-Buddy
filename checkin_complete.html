@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Pro Buddy - CheckIn</title>
-  <meta name="Welcome" content="Pro Buddy">
+  <title>PB | Checked-in</title>
+  <meta name="Checked-in" content="Pro Buddy">
 
   <!-- Required meta tags -->
   <meta charset="utf-8">
@@ -28,71 +28,28 @@
   <!-- Header Component-->
   <script src="/components/header.js" type="text/javascript" defer></script>
   
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
+  <!-- Footer Component-->
+  <script src="/components/footer.js" type="text/javascript" defer></script>
 
-    #image1 {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;
-    }
+  <link rel="stylesheet" href="styles/colors.css">
 
-    h1 {
-      text-align: center;
-    }
-
-    h6 {
-      text-align: center;
-    }
-
-    p {
-      text-align: center;
-    }
-  </style>
 </head>
 
 <body>
-
-  <!------------------------------------>
-  <!-- Your own HTML layout goes here -->
-  <!------------------------------------>
     <div id="nav-placeholder"></div>
     <div class="container">
-    <br>
-    <br>
 
-    <div class="card-group">
+    <div class="card-group mt-3">
 
-      <div class="card" style="width: 18rem;">
-
-        <div class="card-body">
-          <h5 class="card-title" id="displayname">Thanks for checking in</h5>
-          <a href="#" class="btn btn-primary" onclick="location.href='main.html'">Go back</a>
+      <div class="card card-no-border" style="width: 18rem;">
+        <div class="card-body text-center">
+          <h5 class="card-title" id="displayname">Thanks for checking in!</h5>
+          <a href="#" class="btn btn-outline-primary" onclick="location.href='main.html'">Return to Home</a>
         </div>
       </div>
-
-
-    </div>
-    <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
-      <i class="material-icons">home</i>
-      <i class="material-icons">check</i>
-      <i class="material-icons">language</i>
-      <i class="material-icons">upload_file</i>
-      <i class="material-icons">chat</i>
-
-    </footer>
-
-    <div class="text-center py-5">
     </div>
 
-
-
+    <div id="footer-placeholder"></div>
   </div>
-
-
 </body>
 </html>

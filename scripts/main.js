@@ -137,7 +137,6 @@ function createUploadCard(id, title, date) {
       <div class="card" id="${id}">
         <div class="card-body">
           <div class="d-flex flex-column align-items-start text-start">
-            <img src="/images/guitar.jpg" alt="Admin" class="" style="width: 100%;">
             <p class="text-left">Title: ${title}</p>
             <p class="text-left">Date: ${date}</p>
           </div>

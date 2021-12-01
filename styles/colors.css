@@ -1,6 +1,9 @@
 .card-thick-border {
     border: 2px solid #424342;
 }
+.card-no-border {
+    border-width: 0px;
+}
 .card.selected {
     background-color: #204C7D;
     color: white;
@@ -11,15 +14,16 @@
     background-color: #9FBFDC;
     color: white;
 }
-.btn {
+.btn-primary {
     border-color: #204C7D;
     background-color: #204C7D;
     color: white;
 }
 
-.btn:hover {
-    border-color: #204C7D;
-    background-color: #204C7D;
+.btn-primary:hover {
+    border-color: white;
+    background-color: white;
+    color: #204C7D;
 }
 
 .btn-light {
@@ -31,6 +35,11 @@
     border-color: white;
     background-color: white;
 }
+.btn-30-percent {
+    width: 30%;
+    max-width: 200px;
+
+}
 .highlight-card .card:hover {
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
     border-color: #204C7D;
@@ -38,21 +47,34 @@
     color: white;
 }
 
-h2 {
+h1, h2, h3, h4, p {
     color: #424342
 }
 
 .btn-outline-primary {
-    border-color: #204C7D;
-    color: #204C7D;
-    
+    border-width: 2px !important;
+    border-color: #204C7D !important;
+    color: #204C7D !important;
 }
 
 .btn-outline-primary:hover {
-    border-color: #204C7D;
-    background-color: #204C7D;
-    outline-color: #204C7D;
-    color: white;
+    border-color: #204C7D !important;
+    background-color: #204C7D !important;
+    outline-color: #204C7D !important;
+    color: white !important;
+}
+
+.btn-outline-white {
+    border-width: 2px !important;
+    border-color: white !important;
+    color: white !important;
+}
+
+.btn-outline-white:hover {
+    border-color: white !important;
+    background-color: white !important;
+    outline-color:white !important;
+    color: #204C7D !important;
 }
 
 .navbar {
@@ -74,4 +96,7 @@ footer i {
 }
 .color-dark-blue {
     color: #204C7D;
+}
+.color-white {
+    color: white;
 }

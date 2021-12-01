@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Pro Buddy - Home</title>
+  <title>PB | Profile</title>
   <meta name="Welcome" content="Pro Buddy">
 
   <!-- Required meta tags -->
@@ -30,97 +30,70 @@
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
   <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+
+
+
+  <!-- api Keys-->
   <script src="./scripts/firebaseAPI.js"></script>
-  <script src="/components/header.js" type="text/javascript" defer></script>
+
+  <!-- Custom js and css -->
   <script src="/scripts/profile_fillout.js"></script>
+  <link rel="stylesheet" href="styles/colors.css">
 
 
+  <!-- Header Component -->
+  <script src="/components/header.js" type="text/javascript" defer></script>
 
-  <!-- Link to the api keys for your firebase project -->
+  <!-- Footer Component-->
+  <script src="/components/footer.js" type="text/javascript" defer></script>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
-
-    #image1 {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    h6 {
-      text-align: center;
-    }
-
-    p {
-      text-align: center;
-    }
-  </style>
 </head>
 
-
-
 <body>
-
-  <!------------------------------------>
-  <!-- Your own HTML layout goes here -->
-  <!------------------------------------>
   <div id="nav-placeholder"></div>
   <div class="container">
-    <h1>User Profile </h1>
+    <div class="text-center my-3">
+      <h1>User Profile </h1>
+    </div>
+    <div class="columm">
+          <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" height="150"
+            width="150" id="profilePic">
+          <button class="btn btn-outline-primary mx-3" onclick="document.getElementById('profilePicFile').click()">Change
+            Profile
+            Picture</button>
+    </div>
 
-    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150"
-      id="profilePic">
-    <button class="btn btn-outline-primary" onclick="document.getElementById('profilePicFile').click()">Change Profile
-      Picture</button>
     <input type="file" id="profilePicFile" style="display:none">
     <form>
       <fieldset class="mb-3" id="personalInfoFields" disabled>
-        <div class="form-group">
+        <div class="form-group my-3">
           <label>Name</label>
-          <input type="text" id="nameInput" class="form-control" placeholder="Enter your name">
+          <input type="text" id="nameInput" class="form-control" placeholder="'John Smith'">
         </div>
-        <div class="form-group">
+        <div class="form-group my-3">
           <label>Age</label>
-          <input type="text" id="ageInput" class="form-control" placeholder="Enter your age">
+          <input type="text" id="ageInput" class="form-control" placeholder="'22'">
         </div>
-        <div class="form-group">
+        <div class="form-group my-3">
           <label>City</label>
-          <input type="text" id="cityInput" class="form-control" placeholder="Enter your city">
+          <input type="text" id="cityInput" class="form-control" placeholder="'Vancouver, BC'">
         </div>
 
-        <div class="form-group">
+        <div class="form-group my-3">
           <label> Tell us about yourself!</label>
-          <input type="text" id="introInput" class="form-control" placeholder="Your intro goes here"
+          <input type="text" id="introInput" class="form-control" placeholder="'Music lover'"
             style="height: 100px">
         </div>
       </fieldset>
-      <div class="d-flex justify-content-end mt-5">
-        <button type="button" class="btn btn-secondary" onclick="editUserInfo()">Edit</button>
-        <span style="width: 10px"></span>
-        <button type="button" class="btn btn-primary" onclick="saveUserInfo()">Save</button>
+      <div class="d-flex justify-content-center mt-5">
+        <button type="button" class="btn btn-secondary mx-2" onclick="editUserInfo()">Edit</button>
+        <button type="button" class="btn btn-outline-primary mx-2" onclick="saveUserInfo()">Save</button>
       </div>
     </form>
   </div>
 
-  <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
-    <i class="material-icons">home</i>
-    <i class="material-icons">check</i>
-    <i class="material-icons">language</i>
-    <i class="material-icons">upload_file</i>
-    <i class="material-icons">chat</i>
-
-  </footer>
-
-  <div class="text-center py-5">
-  </div>
+  <div id="footer-placeholder"></div>
 </body>
 
 </html>

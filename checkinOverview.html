@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Pro Buddy - Home</title>
+  <title> PB | Check-In Overview</title>
   <meta name="Welcome" content="Pro Buddy">
 
   <!-- Required meta tags -->
@@ -26,82 +26,45 @@
 
   <script src="/scripts/firebaseAPI.js"></script>
 
+  <!-- Custom CSS & JS -->
+  <link rel="stylesheet" href="styles/colors.css">
+  <script src="/scripts/checkinOverview.js" defer></script>
+
   <!-- Header Component-->
   <script src="/components/header.js" type="text/javascript" defer></script>
-  <script src="/scripts/checkinOverview.js"></script>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-    }
+  <!-- Footer Component-->
+  <script src="/components/footer.js" type="text/javascript" defer></script>
 
-    #image1 {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    h6 {
-      text-align: center;
-    }
-
-    p {
-      text-align: center;
-    }
-
-    #backbutton {
-      padding-left: 0.80em;
-    }
-  </style>
 </head>
 
 <body>
-  <!-- Templates for general use, not displayed -->
   <template id="CardTemplate">
-    <div class="card py-2 mx-2" style="width: 18rem;">
-
+    <div class="card py-2 mx-2 mb-3" style="width: 18rem;">
       <div class="card-body">
-
         <p class="card-text" id="uploadDate">Date</p>
-        <p class="card-text" id="uploadDescription">Some quick example text to build on the card title and make up the
-          bulk of the
-          card's content.</p>
-
+        <p class="card-text" id="uploadDescription"></p>
       </div>
     </div>
   </template>
-
-  <!------------------------------------>
-  <!-- Your own HTML layout goes here -->
-  <!------------------------------------>
+  
   <div id="nav-placeholder"></div>
   <div class="container">
 
 
-    <div class="container">
-      <h1>Checkin History</h1>
-      <!-- Here is container for cards  -->
-      <div class="container">
-        <div id="uploads-go-here" class="row row-cols-auto">
+    <div class="container text-center">
 
+      <div class="mt-3 mb-4">
+         <h1>Check-In Overview</h1>
+      </div>
+      <div class="container">
+        <div id="uploads-go-here" class="row row-cols-auto justify-content-center mb-5">
         </div>
       </div>
     </div>
-    <footer class="navbar justify-content-evenly bg-secondary fixed-bottom">
-      <i class="material-icons">home</i>
-      <i class="material-icons">check</i>
-      <i class="material-icons">language</i>
-      <i class="material-icons">upload_file</i>
-      <i class="material-icons">chat</i>
-
-    </footer>
+    
   </div>
+  <div id="footer-placeholder"></div>
 </body>
 
 </html>
