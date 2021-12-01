@@ -29,4 +29,5 @@ function displayCards(collection) {
     }
   })
 }
+// call the function to run it
 displayCards();

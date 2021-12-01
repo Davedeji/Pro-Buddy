@@ -4,7 +4,6 @@ function populateInfo() {
     firebase.auth().onAuthStateChanged(user => {
         // Check if user is signed in:
         if (user) {
-
             //go to the correct user document by referencing to the user uid
             currentUser = db.collection("users").doc(user.uid)
             //get the document for current user.
@@ -12,7 +11,6 @@ function populateInfo() {
                 .then(userDoc => {
                     //get the data fields of the user
                     var userName = userDoc.data().name;
-                    // console.log(userName)
                     var userAge = userDoc.data().age;
                     var userCity = userDoc.data().city;
                     var userDescription = userDoc.data().description;
@@ -40,24 +38,21 @@ function populateInfo() {
 
 
 
-
-
 //call the function to run it 
 populateInfo();
 
+// enable the form to be editable
 function editUserInfo() {
-    // console.log("edit is clicked")
     document.getElementById('personalInfoFields').disabled = false;
 }
 
+// write form's data into user's doc in database
 function saveUserInfo() {
-    // console.log("save is clicked")
     //grab values from the form that user populated, then put 
     userName = document.getElementById('nameInput').value;       //get the value of the field with id="nameInput"
-    userAge = document.getElementById('ageInput').value;     //get the value of the field with id="schoolInput"
-    userCity = document.getElementById('cityInput').value;
-    userDescription = document.getElementById('introInput').value;      //get the value of the field with id="cityInput"
-    // console.log("input is " userName, userAge, userCity)
+    userAge = document.getElementById('ageInput').value;     //get the value of the field with id="ageInput"
+    userCity = document.getElementById('cityInput').value;   //get the value of the field with id="cityInput"
+    userDescription = document.getElementById('introInput').value;      //get the value of the field with id="introInput"
 
     // write the values into database:
     currentUser.update({
@@ -69,16 +64,16 @@ function saveUserInfo() {
         .then(() => {
             console.log("Document successfully updated!");
         })
-
+    // disable the form to be uneditable
     document.getElementById('personalInfoFields').disabled = true;
 }
 
 
 
-
-
+// listen to any change to profile picture
 function AddUploadListener() {
     firebase.auth().onAuthStateChanged(function (user) {
+        // Check if user is signed in
         if (user) {
             console.log(user.uid)
             const fileInput = document.getElementById("profilePicFile"); // pointer #1
@@ -90,20 +85,21 @@ function AddUploadListener() {
 
                 //the change event returns a file "e.target.files[0]"
                 var blob = URL.createObjectURL(e.target.files[0]);
-                var targetfile = (e.target.files[0]);
+                var targetfile = (e.target.files[0]);  // save the file to a variable
 
                 //change the DOM img element source to point to this file
                 image.src = blob; //assign the "src" property of the "img" tag
 
-                //do database stuff:  add to menu collection
+                //do database stuff:  add to user doc under users collection
                 storeImage(user.uid, targetfile);
             })
         } else { console.log("no user signed in") }
     });
 }
-
+// call the function to run it
 AddUploadListener();
 
+// upload and write profile picture into storage and firestore database
 function storeImage(userid, pickedfile) {
     var storageRef = firebase.storage().ref("images/" + userid + ".jpg"); // Get reference
     var metadata = {
@@ -115,26 +111,25 @@ function storeImage(userid, pickedfile) {
         .then(function () {
             storageRef.getDownloadURL() //get URL of the uploade file
                 .then(function (url) {
-                    console.log(url); // Save the URL into users collection
+                    console.log(url);
                     db.collection("users").doc(userid).update({
-                        "profilePic": url
+                        "profilePic": url   // Save the URL into users collection
                     })
                 })
         });
-
 }
 
+// read from database to display current user's profile picture
 function displayProfilePic() {
     firebase.auth().onAuthStateChanged(function (user) {
+        // check if user is signed in
         if (user) {
-            db.collection("users").doc(user.uid)
+            db.collection("users").doc(user.uid)  // get current user's doc
                 .get()
                 .then(function (snap) {
-
-
-                    var pic = snap.data().profilePic;
-
-                    $("#profilePic").attr("src", pic);
+                    var pic = snap.data().profilePic; // get url for the profile picture
+                    $("#profilePic").attr("src", pic);  // change the DOM img element source to point to this url
+                    // run emptypic function
                     emptypic();
 
 
@@ -142,12 +137,14 @@ function displayProfilePic() {
         }
     })
 }
+// call the function to run it
 displayProfilePic();
 
+// display default picture for empty user profile picture situation
 function emptypic() {
-    var x = document.getElementById("profilePic").getAttribute("src");
+    var x = document.getElementById("profilePic").getAttribute("src");  // reference to DOM image element's source attribute
+    // if source attribute is empty or null, do something
     if (x == "" || x == null) {
-        $("#profilePic").attr("src", "https://bootdey.com/img/Content/avatar/avatar7.png");
+        $("#profilePic").attr("src", "https://bootdey.com/img/Content/avatar/avatar7.png"); // set source attribute to default picture
     }
-
 }
