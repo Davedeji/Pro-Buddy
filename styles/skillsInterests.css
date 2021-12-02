@@ -1,31 +1,30 @@
 h2 {
-    text-align: center;
-    padding-top: 2em;
+  text-align: center;
+  padding-top: 2em;
 }
 
 h5 {
-    text-align: center;
-    padding-bottom: 2em;
+  text-align: center;
+  padding-bottom: 2em;
 }
 
 #cardGroup {
-    padding-bottom: 2em;
+  padding-bottom: 2em;
 }
 
 .card {
-    border: 2px solid black;
-    /* background-color: #5F63E4;
+  border: 2px solid black;
+  /* background-color: #5F63E4;
         color: white; */
 }
 
 .card-body {
-    max-height: 70px;
-
+  max-height: 70px;
 }
 
 .card-img-top {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 /* .btn-30 {
@@ -41,5 +40,3 @@ h5 {
 .btn-primary {
     background-color: #5F63E4;
 } */
-
-

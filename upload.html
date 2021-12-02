@@ -1,82 +1,102 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>PB | Upload</title>
+    <meta name="Welcome" content="Pro Buddy" />
 
-<head>
-  <meta charset="utf-8">
-  <title>PB | Upload</title>
-  <meta name="Welcome" content="Pro Buddy">
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+      crossorigin="anonymous"
+    ></script>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
-  </script>
+    <!-- Google Icons (Material Design)-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-  <!-- Google Icons (Material Design)-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/ui/4.8.1/firebase-ui-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <!-- API Keys -->
+    <script src="/scripts/firebaseAPI.js"></script>
 
+    <!-- custom js & css -->
+    <script src="/scripts/uploadHelper.js"></script>
+    <link rel="stylesheet" href="styles/colors.css" />
 
-  <!-- API Keys -->
-  <script src="/scripts/firebaseAPI.js"></script>
+    <!-- Header Component-->
+    <script src="/components/header.js" type="text/javascript" defer></script>
 
-  <!-- custom js & css -->
-  <script src="/scripts/uploadHelper.js"></script>
-  <link rel="stylesheet" href="styles/colors.css">
+    <!-- Footer Component-->
+    <script src="/components/footer.js" type="text/javascript" defer></script>
+  </head>
 
-  <!-- Header Component-->
-  <script src="/components/header.js" type="text/javascript" defer></script>
+  <body>
+    <div id="nav-placeholder"></div>
+    <div class="container">
+      <div class="text-center my-3">
+        <h1>Upload</h1>
+      </div>
+      <form id="uploadTitle">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">Title</label>
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            required
+            placeholder="title"
+            name="title"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label"
+            >Description</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="exampleInputPassword1"
+            required
+            placeholder="Description"
+            name="description"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputPassword1" class="form-label">File</label>
+          <input type="file" name="file" class="form-control" />
+        </div>
+      </form>
 
-  <!-- Footer Component-->
-  <script src="/components/footer.js" type="text/javascript" defer></script>
-
-</head>
-
-<body>
-  <div id="nav-placeholder"></div>
-  <div class="container">
-
-    <div class="text-center my-3">
-      <h1>Upload</h1>
+      <div class="d-flex justify-content-center mt-5">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          onclick="upload(document.getElementById('uploadTitle'))"
+        >
+          Upload
+        </button>
+      </div>
     </div>
-    <form id="uploadTitle">
-      <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Title</label>
-        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required
-          placeholder="title" name="title">
-
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Description</label>
-        <input type="text" class="form-control" id="exampleInputPassword1" required placeholder="Description"
-          name="description">
-      </div>
-      <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">File</label>
-        <input type="file" name="file" class="form-control">
-      </div>
-    </form>
-
-    <div class="d-flex justify-content-center mt-5">
-      <button type="button" class="btn btn-outline-primary"
-        onclick="upload(document.getElementById('uploadTitle'))">Upload
-      </button>
-    </div>
-
-  </div>
-  <div id="footer-placeholder"></div>
-
-</body>
-
+    <div id="footer-placeholder"></div>
+  </body>
 </html>

@@ -1,5 +1,5 @@
 // function for user checkin processs
-function CHECKIN() {
+function checkIn() {
   // Notes firebase document
     let Notes = document.getElementById("comment").value;
     //check if user is logged in

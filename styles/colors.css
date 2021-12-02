@@ -1,106 +1,109 @@
 body {
-    padding-bottom: 70px;
+  padding-bottom: 70px;
 }
 
 .card-thick-border {
-    border: 2px solid #424342;
+  border: 2px solid #424342;
 }
 .card-no-border {
-    border-width: 0px;
+  border-width: 0px;
 }
 .card.selected {
-    background-color: #204C7D;
-    color: white;
-    border: 2px solid #204C7D;
+  background-color: #204c7d;
+  color: white;
+  border: 2px solid #204c7d;
 }
 .card:hover {
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
-    background-color: #9FBFDC;
-    color: white;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+  background-color: #9fbfdc;
+  color: white;
 }
 .btn-primary {
-    border-color: #204C7D;
-    background-color: #204C7D;
-    color: white;
+  border-color: #204c7d;
+  background-color: #204c7d;
+  color: white;
 }
 
 .btn-primary:hover {
-    border-color: white;
-    background-color: white;
-    color: #204C7D;
+  border-color: white;
+  background-color: white;
+  color: #204c7d;
 }
 
 .btn-light {
-    border-color: #9FBFDC;
-    background-color: #9FBFDC;
-    color: white;
+  border-color: #9fbfdc;
+  background-color: #9fbfdc;
+  color: white;
 }
 .btn-light:hover {
-    border-color: white;
-    background-color: white;
+  border-color: white;
+  background-color: white;
 }
 .btn-30-percent {
-    width: 30%;
-    max-width: 200px;
-
+  width: 30%;
+  max-width: 200px;
 }
 .highlight-card .card:hover {
-    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
-    border-color: #204C7D;
-    background-color: #204C7D;
-    color: white;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+  border-color: #204c7d;
+  background-color: #204c7d;
+  color: white;
 }
 
-h1, h2, h3, h4, p {
-    color: #424342
+h1,
+h2,
+h3,
+h4,
+p {
+  color: #424342;
 }
 
 .btn-outline-primary {
-    border-width: 2px !important;
-    border-color: #204C7D !important;
-    color: #204C7D !important;
+  border-width: 2px !important;
+  border-color: #204c7d !important;
+  color: #204c7d !important;
 }
 
 .btn-outline-primary:hover {
-    border-color: #204C7D !important;
-    background-color: #204C7D !important;
-    outline-color: #204C7D !important;
-    color: white !important;
+  border-color: #204c7d !important;
+  background-color: #204c7d !important;
+  outline-color: #204c7d !important;
+  color: white !important;
 }
 
 .btn-outline-white {
-    border-width: 2px !important;
-    border-color: white !important;
-    color: white !important;
+  border-width: 2px !important;
+  border-color: white !important;
+  color: white !important;
 }
 
 .btn-outline-white:hover {
-    border-color: white !important;
-    background-color: white !important;
-    outline-color:white !important;
-    color: #204C7D !important;
+  border-color: white !important;
+  background-color: white !important;
+  outline-color: white !important;
+  color: #204c7d !important;
 }
 
 .navbar {
-    background-color: #204C7D;
+  background-color: #204c7d;
 }
 
 footer i {
-    color: #9FBFDC;
+  color: #9fbfdc;
 }
 
 .bg-light-blue {
-    background-color: #9FBFDC;
+  background-color: #9fbfdc;
 }
 .bg-dark-blue {
-    background-color: #204C7D;
+  background-color: #204c7d;
 }
 .color-light-blue {
-    color: #9FBFDC;
+  color: #9fbfdc;
 }
 .color-dark-blue {
-    color: #204C7D;
+  color: #204c7d;
 }
 .color-white {
-    color: white;
+  color: white;
 }

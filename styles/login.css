@@ -1,12 +1,12 @@
 .form-group {
-    align-items: center;
+  align-items: center;
 }
 
 .form-width {
-    max-width: 400px;
+  max-width: 400px;
 }
 
 #logo {
-    width: 60%;
-    height: 60%;
+  width: 60%;
+  height: 60%;
 }
