@@ -12,7 +12,7 @@ function CHECKIN() {
             Notes: Notes,
             User: userID,
             Time: firebase.firestore.Timestamp.now(),
-          }).then(() => { window.location = "/checkin_complete.html" });
+          }).then(() => { window.location = "/checkinComplete.html" });
         });
       }
     });
