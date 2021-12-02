@@ -11,7 +11,7 @@ function getMatchedUser() {
       var docRef = db.collection("users").doc(user.uid)  // get current user's document
       console.log(user.uid)
       // return matched user's uid if there is one
-      docRef.get().then((doc) => {
+      docRef.onSnapshot((doc) => {
         if (doc.exists) {
           matchedUserID = doc.data().match
           // call function to retrieve matched user's info
