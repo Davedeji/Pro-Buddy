@@ -1,9 +1,10 @@
+// Retrieve and display checkin data from user doc
 function displayCards(collection) {
     let CardTemplate = document.getElementById("CardTemplate");
-
     firebase.auth().onAuthStateChanged(user => {
+      // check if user is signed in
       if (user) {
-        db.collection("checkin").where("User", "==", user.uid)
+        db.collection("checkin").where("User", "==", user.uid) 
           .get().then(snap => {
             snap.forEach(doc => {
               

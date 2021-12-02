@@ -37,7 +37,6 @@ function populateInfo() {
 }
 
 
-
 //call the function to run it 
 populateInfo();
 
