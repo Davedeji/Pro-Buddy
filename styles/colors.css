@@ -1,3 +1,7 @@
+body {
+    padding-bottom: 70px;
+}
+
 .card-thick-border {
     border: 2px solid #424342;
 }
