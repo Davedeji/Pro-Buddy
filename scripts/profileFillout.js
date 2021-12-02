@@ -63,6 +63,7 @@ function saveUserInfo() {
     })
         .then(() => {
             console.log("Document successfully updated!");
+            alert('User profile updated!')
         })
     // disable the form to be uneditable
     document.getElementById('personalInfoFields').disabled = true;
