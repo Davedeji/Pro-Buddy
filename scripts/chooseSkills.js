@@ -1,4 +1,5 @@
     let cardCount = 0
+    // populate card data for skills page
     let cardData = [
         ["Music", "music", "/images/skills_interests/music.jpg"],
         ["Nature", "nature", "/images/skills_interests/nature.jpg"],
@@ -13,7 +14,7 @@
         $('#cardGroup').append(card);
         cardCount += 1
     }
-
+    // add eventlistener for onclick toggle
     document.querySelectorAll('.col').forEach(item => {
         item.addEventListener('click', event => {
             item.firstElementChild.classList.toggle('selected')
