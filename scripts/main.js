@@ -35,7 +35,7 @@ function getMatchedUserProperties(userID) {
   var description = ""
   var docRef = db.collection("users").doc(userID)
   // get matched user's doc
-  docRef.get().then((doc) => {
+  docRef.onSnapshot((doc) => {
     if (doc.exists) {
       name = doc.data().name
       description = doc.data().description
@@ -69,7 +69,7 @@ function getRecentCheckIn() {
         .then((querySnapshot) => {
           // get data from each entry
           querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data())
+            
             let date = doc.data().Time
             date = date.toDate()
             // convert timestamp object into time
@@ -126,7 +126,7 @@ function getRecentUploads() {
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            console.log(doc.id, " => ", doc.data());
+           
             let date = doc.data().date
             date = date.toDate()
             // convert timestamp into time
@@ -181,13 +181,13 @@ function displayMatchedProfilePic() {
     if (user) {
       // get current user's user document
       db.collection("users").doc(user.uid)
-        .get()
-        .then(function (snap) {
+        
+        .onSnapshot(function (snap) {
           // get matched user's uid
           var match = snap.data().match;
           console.log(match)
           // get matched user's document using matched user's uid
-          db.collection("users").doc(match).get().then(e => {
+          db.collection("users").doc(match).onSnapshot(e => {
             // get matched user's profile picture url value
             var matchProfilePic = e.data().profilePic
             console.log(matchProfilePic)
@@ -209,7 +209,7 @@ displayMatchedProfilePic();
 function emptypic() {
   var picture_source = document.getElementById("matchedProfilePic").getAttribute("src");
   // if img element's src attribute is empty or null
-  if (picture_source == "" || x == null) {
+  if (picture_source == "" || picture_source == null) {
     // set src to default picture url
     $("#matchedProfilePic").attr("src", "https://bootdey.com/img/Content/avatar/avatar7.png");
   }
@@ -233,12 +233,16 @@ function match() {
   var matched = [];
   search(first_half => {
     second_search(second_half => {
+      console.log(second_half)
       const secondItems = new Set(second_half)
+      console.log(secondItems)
       const intersection = first_half.filter(x => secondItems.has(x))
-      console.log(intersection)
+      console.log(intersection[0])
       db.collection("users").doc(user.uid).set({
-        match: intersection[0]
-      }, { merge: true });
+        match: intersection[0]        
+      }, { merge: true }).then(() => {
+        sync_match();
+      })
 
     })
   })
@@ -272,6 +276,7 @@ function search(callback) {
           first_half.push(w)
         }
         callback(first_half)
+        // console.log(first_half)
       })
     }
   })
@@ -288,11 +293,12 @@ function second_search(callback) {
     });
 
     for (let i = 0; i < list_two.length; i++) {
-      db.collection('skills').doc(list_two[i]).get().then(l => {
+      db.collection('interests').doc(list_two[i]).get().then(l => {
         for (let w of l.data().userID) {
           second_half.push(w)
         }
         callback(second_half)
+        // console.log(second_half)
       })
     }
   });
