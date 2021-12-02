@@ -1,13 +1,15 @@
+// redirects to messages page
 function messageClicked() {
     location.href = "/messages.html";
 }
+// getting matched users based on user uid
 function getMatchedUser() {
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
             var uid = user.uid;
             var docRef = db.collection("users").doc(user.uid)
             console.log(user.uid)
-
+            // return matched users if they have been matched, otherwise nothing.
             docRef.get().then((doc) => {
                 if (doc.exists) {
                     matchedUserID = doc.data().match
