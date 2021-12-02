@@ -40,9 +40,7 @@ function getMatchedUserProperties(userID) {
     } else {
       console.log("No such document!");
     }
-  }).catch((error) => {
-    console.log("Error getting document:", error);
-  });
+  })
 }
 
 // Display info into corresponding html element
