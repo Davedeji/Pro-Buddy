@@ -19,7 +19,7 @@ function checkIn() {
             // automatically using firebase builtin to record time of checkin
             Time: firebase.firestore.Timestamp.now(),
             // redirct page to checkinComplete
-          }).then(() => { window.location = "/checkinComplete.html" });
+          }).then(() => { window.location = "/html/checkinComplete.html" });
         });
       }
     });
