@@ -210,19 +210,25 @@ function emptypic() {
 
 }
 
+// find another user with complementary interest/skill according to current user
 function match() {
   const user = firebase.auth().currentUser;
-  var matched = [];
+  // call function to return a list of useruid that have skills which current user is interested in
   search(first_half => {
+    // call function to return a list of useruid that are interested in current user's skills
     second_search(second_half => {
       console.log(second_half)
+      // remove duplicated id
       const secondItems = new Set(second_half)
       console.log(secondItems)
+      // filter out a list of useruid which exist in both lists
       const intersection = first_half.filter(x => secondItems.has(x))
       console.log(intersection[0])
+      // write the first useruid in intersection list into current user's match field
       db.collection("users").doc(user.uid).set({
         match: intersection[0]        
       }, { merge: true }).then(() => {
+        // call function to write current user's uid into matched user's match field
         sync_match();
       })
 
@@ -230,10 +236,14 @@ function match() {
   })
 }
 
+// write current user's uid into matched user's match field
 function sync_match() {
   const user = firebase.auth().currentUser;
+  // point to current user's doc
   db.collection("users").doc(user.uid).get().then(snap => {
+    // grab value inside match field
     var matched_user_uid = snap.data().match
+    // write value into matched user's match field
     db.collection("users").doc(matched_user_uid).set({
       match: user.uid
     }, { merge: true });
@@ -241,22 +251,27 @@ function sync_match() {
   })
 }
 
-
+// return a list of useruid that have skills which current user is interested in
 function search(callback) {
   const user = firebase.auth().currentUser;
   console.log(user.uid)
   let first_half = [];
   let list_one = [];
+  // query doc inside interests collection to find doc that contains current useruid
   db.collection("interests").where('userID', 'array-contains', user.uid).get().then(snap => {
     snap.forEach(doc => {
+      // write the name of those docs into a list
       list_one.push(doc.id)
     });
-
+    // cycle through the list of names of docs
     for (let i = 0; i < list_one.length; i++) {
-      db.collection('skills').doc(list_one[i]).get().then(l => {
-        for (let w of l.data().userID) {
-          first_half.push(w)
+      // point to skills collection's doc with the same name
+      db.collection('skills').doc(list_one[i]).get().then(userUid => {
+        // write each useruid value into a list
+        for (let eachUid of userUid.data().userID) {
+          first_half.push(eachUid)
         }
+        // callback the list of useruid
         callback(first_half)
         // console.log(first_half)
       })
@@ -264,21 +279,26 @@ function search(callback) {
   })
 }
 
-
+// return a list of useruid that are interested in current user's skills
 function second_search(callback) {
   const user = firebase.auth().currentUser;
   const second_half = [];
+  // query doc inside skills collection to find doc that contains current useruid
   db.collection("skills").where('userID', 'array-contains', user.uid).get().then(snap => {
     let list_two = []
+    // write the name of those docs into a list
     snap.forEach(doc => {
       list_two.push(doc.id)
     });
 
     for (let i = 0; i < list_two.length; i++) {
-      db.collection('interests').doc(list_two[i]).get().then(l => {
-        for (let w of l.data().userID) {
-          second_half.push(w)
+      // point to skills collection's doc with the same name
+      db.collection('interests').doc(list_two[i]).get().then(userUid => {
+        // write each useruid value into a list
+        for (let eachUid of userUid.data().userID) {
+          second_half.push(eachUid)
         }
+        // callback the list of useruid
         callback(second_half)
         // console.log(second_half)
       })
