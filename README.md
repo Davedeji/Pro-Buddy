@@ -1,23 +1,26 @@
-## My Web Application (Title)
+## ProBuddy
 
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Contents](#content)
+* [References](#reference)
 
 ## General Info
-* Shawn: knock knock.	
-* This is Niki, for the sake of god please work.
-* This is Deji. I am Excited!
-* Niki's final addition to the project. 
-	
+* ProBuddy is an application that connects you with a PRO to learn from, and a BUDDY to learn with! It's like Tinder, but for learning!
+* We use a matching algorithm to match users based on complementary interests and skills they have chosen, and connect them to match and chat.
+* The 3 main functionalities of our app is: match and chat, complete daily check-ins, upload progress files.
+
+
 
 ## Technologies
 Technologies used for this project:
 * HTML, CSS
 * JavaScript
 * Bootstrap 
-* ...
+* Google Firebase, Firestorage
 	
+
+
 ## Content
 Content of the project folder:
 
@@ -86,9 +89,9 @@ It has the following subfolders and files:
     /index.html   
     /loginHelperOld.js
     /loginOld.css
-    /loginOld.html
+    /loginOld.html 
     /match.html
-    /uploadOverview.html   
+    /uploadOverview.html    
 
 ├── .firebase
 
@@ -99,11 +102,18 @@ Firebase hosting files:
 ├── firestore.indexes.json
 ├── firestore.rules
 └── storage.rules
-
-
 ```
 
-Tips for file naming files and folders:
-* use lowercase with no spaces
-* use dashes (not underscore) for word separation
+
+
+## References
+* Firebase API
+* Firebase library
+* Bootstrap library
+* Google Fonts
+* Google Icons
+* Good Vibes image: https://st3.depositphotos.com/3969727/13592/v/600/depositphotos_135921738-stock-illustration-good-vibes-only-splash-paint.jp
+* Painting image: https://www.pinterest.ca/pin/762515780636729492/
+
+
 
